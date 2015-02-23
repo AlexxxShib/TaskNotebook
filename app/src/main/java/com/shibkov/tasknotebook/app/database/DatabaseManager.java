@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * Created by Alexey on 21.02.2015.
+ * Created by alexxxshib
  */
 public class DatabaseManager {
 
@@ -15,6 +15,8 @@ public class DatabaseManager {
 
     private AtomicInteger mOpenCounter = new AtomicInteger();
     private SQLiteDatabase mDatabase;
+
+    private DatabaseManager() {}
 
     public static synchronized void initializeInstance(SQLiteOpenHelper helper) {
         if (cInstance == null) {
@@ -26,7 +28,7 @@ public class DatabaseManager {
     public static synchronized DatabaseManager getInstance() {
         if (cInstance == null) {
             throw new IllegalStateException(DatabaseManager.class.getSimpleName() +
-                    " is not initialized, call initialize(..) method first.");
+                    " is not initialized, call initializeInstance(..) method first.");
         }
         return cInstance;
     }
@@ -34,6 +36,13 @@ public class DatabaseManager {
     public synchronized SQLiteDatabase openWritableDB() {
         if (mOpenCounter.incrementAndGet() == 1) {
             mDatabase = mDatabaseHelper.getWritableDatabase();
+        }
+        return mDatabase;
+    }
+
+    public synchronized SQLiteDatabase openReadableDB() {
+        if (mOpenCounter.incrementAndGet() == 1) {
+            mDatabase = mDatabaseHelper.getReadableDatabase();
         }
         return mDatabase;
     }

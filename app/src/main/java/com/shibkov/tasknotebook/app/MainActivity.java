@@ -2,6 +2,8 @@ package com.shibkov.tasknotebook.app;
 
 import java.util.Locale;
 
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -17,6 +19,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import com.shibkov.tasknotebook.app.database.Contract;
+import com.shibkov.tasknotebook.app.database.DatabaseHelper;
+import com.shibkov.tasknotebook.app.database.DatabaseManager;
 
 
 public class MainActivity extends ActionBarActivity implements ActionBar.TabListener {

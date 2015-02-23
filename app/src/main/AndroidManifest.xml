@@ -8,8 +8,8 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.shibkov.tasknotebook.app.MainActivity"
-            android:label="@string/app_name" >
+            android:name="com.shibkov.tasknotebook.app.TestActivity"
+            android:label="@string/title_activity_test" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
