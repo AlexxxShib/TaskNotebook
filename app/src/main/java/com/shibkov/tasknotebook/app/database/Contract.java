@@ -11,8 +11,11 @@ public class Contract {
 
         public static final String TABLE_NAME  = "task_notes_table";
 
+        public static final String DATE        = "date";
         public static final String CATEGORY    = "category";
         public static final String IS_DONE     = "is_done";
+        public static final String HEADER      = "header";
+        public static final String BODY        = "body";
 
         public static final String JSON_OBJECT = "json_object";
 

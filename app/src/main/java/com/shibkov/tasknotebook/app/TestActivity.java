@@ -25,10 +25,10 @@ public class TestActivity extends ActionBarActivity {
     protected void onStart() {
         super.onStart();
 
-        testDBInsert();
+//        testDBInsert();
     }
 
-    private void testDBInsert() {
+    /*private void testDBInsert() {
         DatabaseManager.initializeInstance(new DatabaseHelper(this));
         SQLiteDatabase database = DatabaseManager.getInstance().openWritableDB();
 
@@ -62,7 +62,7 @@ public class TestActivity extends ActionBarActivity {
             cursor.close();
         }
         DatabaseManager.getInstance().closeDatabase();
-    }
+    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

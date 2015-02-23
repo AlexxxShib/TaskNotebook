@@ -1,7 +1,10 @@
 package com.shibkov.tasknotebook.app.database;
 
+import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import com.j256.ormlite.android.apptools.OpenHelperManager;
+import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -11,17 +14,15 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class DatabaseManager {
 
     private static DatabaseManager cInstance;
-    private static SQLiteOpenHelper mDatabaseHelper;
+    private static DatabaseHelper mDatabaseHelper;
 
-    private AtomicInteger mOpenCounter = new AtomicInteger();
-    private SQLiteDatabase mDatabase;
+    private DatabaseManager() {
+    }
 
-    private DatabaseManager() {}
-
-    public static synchronized void initializeInstance(SQLiteOpenHelper helper) {
+    public static synchronized void initializeInstance(Context context) {
         if (cInstance == null) {
             cInstance = new DatabaseManager();
-            mDatabaseHelper = helper;
+            mDatabaseHelper = OpenHelperManager.getHelper(context, DatabaseHelper.class);
         }
     }
 
@@ -33,23 +34,12 @@ public class DatabaseManager {
         return cInstance;
     }
 
-    public synchronized SQLiteDatabase openWritableDB() {
-        if (mOpenCounter.incrementAndGet() == 1) {
-            mDatabase = mDatabaseHelper.getWritableDatabase();
-        }
-        return mDatabase;
-    }
-
-    public synchronized SQLiteDatabase openReadableDB() {
-        if (mOpenCounter.incrementAndGet() == 1) {
-            mDatabase = mDatabaseHelper.getReadableDatabase();
-        }
-        return mDatabase;
+    public synchronized DatabaseHelper getHelper() {
+        return mDatabaseHelper;
     }
 
     public synchronized void closeDatabase() {
-        if (mOpenCounter.decrementAndGet() == 0) {
-            mDatabase.close();
-        }
+        OpenHelperManager.releaseHelper();
+        mDatabaseHelper = null;
     }
 }

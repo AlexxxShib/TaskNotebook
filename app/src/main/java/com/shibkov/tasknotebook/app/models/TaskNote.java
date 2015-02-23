@@ -1,19 +1,33 @@
 package com.shibkov.tasknotebook.app.models;
 
+import com.j256.ormlite.field.DataType;
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
+import com.shibkov.tasknotebook.app.database.Contract;
+
 import java.util.Date;
+
+import static android.provider.BaseColumns._ID;
+import static com.shibkov.tasknotebook.app.database.Contract.CTaskNote.*;
 
 /**
  * Created by alexxxshib
  */
+@DatabaseTable(tableName = TABLE_NAME)
 public class TaskNote {
-
+    @DatabaseField(columnName = _ID, index = true, generatedId = true)
     private long id;
 
+    @DatabaseField(columnName = DATE, canBeNull = false, dataType = DataType.DATE)
     private Date date;
+    @DatabaseField(columnName = CATEGORY, canBeNull = false)
     private int type;
+    @DatabaseField(columnName = IS_DONE)
     private boolean isDone;
 
+    @DatabaseField(columnName = HEADER, canBeNull = false)
     private String header;
+    @DatabaseField(columnName = BODY)
     private String body;
 
     public long getId() {
