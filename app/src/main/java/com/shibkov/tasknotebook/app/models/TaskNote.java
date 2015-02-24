@@ -3,7 +3,6 @@ package com.shibkov.tasknotebook.app.models;
 import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
-import com.shibkov.tasknotebook.app.database.Contract;
 
 import java.util.Date;
 
@@ -20,8 +19,8 @@ public class TaskNote {
 
     @DatabaseField(columnName = DATE, canBeNull = false, dataType = DataType.DATE)
     private Date date;
-    @DatabaseField(columnName = CATEGORY, canBeNull = false)
-    private int type;
+    @DatabaseField(columnName = CATEGORY, canBeNull = false, foreign = true)
+    private Category category;
     @DatabaseField(columnName = IS_DONE)
     private boolean isDone;
 
@@ -46,12 +45,12 @@ public class TaskNote {
         this.date = date;
     }
 
-    public int getType() {
-        return type;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setType(int type) {
-        this.type = type;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public boolean isDone() {

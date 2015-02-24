@@ -16,17 +16,14 @@ public class Contract {
         public static final String IS_DONE     = "is_done";
         public static final String HEADER      = "header";
         public static final String BODY        = "body";
+    }
 
-        public static final String JSON_OBJECT = "json_object";
+    public static class CCategory implements BaseColumns {
 
-        public static final String SQL_CREATE =
-                "CREATE TABLE " + TABLE_NAME + " (" +
-                _ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
-                CATEGORY + " INTEGER," +
-                IS_DONE  + " INTEGER," +
-                JSON_OBJECT + " TEXT )";
+        public static final String TABLE_NAME  = "categories_table";
 
-        public static final String SQL_DROP =
-                "DROP TABLE IF EXISTS " + TABLE_NAME;
+        public static final String VALUE       = "value";
+        public static final String DESCRIPTION = "description";
+        public static final String TIMESTAMP   = "timestamp";
     }
 }
