@@ -40,12 +40,12 @@ public class CategoryManager implements IDataManager<Category> {
                 add(oneDay);
             }
 
-            if (!mCategoryDao.idExists(0L)) {
+            if (!mCategoryDao.idExists(1L)) {
                 Category oneWeek = createCategory(1l, context.getString(R.string.abc_one_week_value),
                         context.getString(R.string.abc_one_week_description), 1000l * 3600l * 24l * 7l);
                 add(oneWeek);
             }
-            if (!mCategoryDao.idExists(0L)) {
+            if (!mCategoryDao.idExists(2L)) {
                 Category oneMonth = createCategory(2l, context.getString(R.string.abc_one_month_value),
                         context.getString(R.string.abc_one_month_description), 1000l * 3600l * 24l * 30l);
                 add(oneMonth);
