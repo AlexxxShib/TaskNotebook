@@ -6,6 +6,7 @@ import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
+import com.shibkov.tasknotebook.app.models.Category;
 import com.shibkov.tasknotebook.app.models.TaskNote;
 import com.shibkov.tasknotebook.app.utils.Logger;
 
@@ -22,9 +23,11 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private static class DaoHolder {
 
         Dao<TaskNote, Long> taskNoteDao;
+        Dao<Category, Long> categoryDao;
 
         public void release() {
             taskNoteDao = null;
+            categoryDao = null;
         }
     }
 
@@ -38,6 +41,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     public void onCreate(SQLiteDatabase database, ConnectionSource connectionSource) {
         try {
             TableUtils.createTableIfNotExists(connectionSource, TaskNote.class);
+            TableUtils.createTableIfNotExists(connectionSource, Category.class);
         } catch (SQLException e) {
             Logger.error(e.getMessage());
         }
@@ -47,6 +51,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     public void onUpgrade(SQLiteDatabase database, ConnectionSource connectionSource, int oldVersion, int newVersion) {
         try {
             TableUtils.dropTable(connectionSource, TaskNote.class, true);
+            TableUtils.dropTable(connectionSource, Category.class, true);
             onCreate(database, connectionSource);
         } catch (SQLException e) {
             Logger.error(e.getMessage());
@@ -62,6 +67,17 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             }
         }
         return mDaoHolder.taskNoteDao;
+    }
+
+    public Dao<Category, Long> getCategoryDao() {
+        if (mDaoHolder.categoryDao == null) {
+            try {
+                mDaoHolder.categoryDao = getDao(Category.class);
+            } catch (SQLException e) {
+                Logger.error(e.getMessage());
+            }
+        }
+        return mDaoHolder.categoryDao;
     }
 
     @Override

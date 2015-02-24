@@ -16,16 +16,20 @@ public class TaskNoteManager implements IDataManager<TaskNote> {
 
     private final Dao<TaskNote, Long> mTaskNoteDao;
 
+    private final CategoryManager mCategoryManager;
+
     public TaskNoteManager(DatabaseHelper helper) {
         mTaskNoteDao = helper.getTaskNoteDao();
         if (mTaskNoteDao == null) {
-            throw new IllegalStateException("Dao TaskNote can't initialized!");
+            throw new IllegalStateException("Dao TaskNote not initialized!");
         }
+        mCategoryManager = new CategoryManager(helper);
     }
 
     @Override
     public void add(TaskNote taskNote) {
         try {
+            mCategoryManager.add(taskNote.getCategory());
             mTaskNoteDao.createOrUpdate(taskNote);
         } catch (SQLException e) {
             Logger.error(e.getMessage());
