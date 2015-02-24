@@ -1,6 +1,10 @@
 package com.shibkov.tasknotebook.app.managers;
 
+import android.content.Context;
 import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.stmt.QueryBuilder;
+import com.shibkov.tasknotebook.app.R;
+import com.shibkov.tasknotebook.app.database.Contract;
 import com.shibkov.tasknotebook.app.database.DatabaseHelper;
 import com.shibkov.tasknotebook.app.models.Category;
 import com.shibkov.tasknotebook.app.utils.Logger;
@@ -14,19 +18,48 @@ import java.util.List;
  */
 public class CategoryManager implements IDataManager<Category> {
 
-    private final Dao<Category, Long> mCategoryeDao;
+    private final Dao<Category, Long> mCategoryDao;
 
     public CategoryManager(DatabaseHelper helper) {
-        mCategoryeDao = helper.getCategoryDao();
-        if (mCategoryeDao == null) {
+        mCategoryDao = helper.getCategoryDao();
+        if (mCategoryDao == null) {
             throw new IllegalStateException("Dao Category not initialized!");
         }
     }
 
+    /**
+     * Init default values for categories
+     * @param context for init from strings of application
+     */
+    public void initDefaultCategories(Context context) {
+
+        try {
+            if (!mCategoryDao.idExists(0L)) {
+                Category oneDay = createCategory(0l, context.getString(R.string.abc_one_day_value),
+                        context.getString(R.string.abc_one_day_description), 1000l * 3600l * 24l);
+                add(oneDay);
+            }
+
+            if (!mCategoryDao.idExists(0L)) {
+                Category oneWeek = createCategory(1l, context.getString(R.string.abc_one_week_value),
+                        context.getString(R.string.abc_one_week_description), 1000l * 3600l * 24l * 7l);
+                add(oneWeek);
+            }
+            if (!mCategoryDao.idExists(0L)) {
+                Category oneMonth = createCategory(2l, context.getString(R.string.abc_one_month_value),
+                        context.getString(R.string.abc_one_month_description), 1000l * 3600l * 24l * 30l);
+                add(oneMonth);
+            }
+        } catch (SQLException e) {
+            Logger.error(e.getMessage());
+        }
+    }
+
+
     @Override
     public void add(Category object) {
         try {
-            mCategoryeDao.createOrUpdate(object);
+            mCategoryDao.createOrUpdate(object);
         } catch (SQLException e) {
             Logger.error(e.getMessage());
         }
@@ -35,7 +68,7 @@ public class CategoryManager implements IDataManager<Category> {
     @Override
     public void remove(Category object) {
         try {
-            mCategoryeDao.delete(object);
+            mCategoryDao.delete(object);
         } catch (SQLException e) {
             Logger.error(e.getMessage());
         }
@@ -44,7 +77,18 @@ public class CategoryManager implements IDataManager<Category> {
     @Override
     public Category findById(long id) {
         try {
-            mCategoryeDao.queryForId(id);
+            mCategoryDao.queryForId(id);
+        } catch (SQLException e) {
+            Logger.error(e.getMessage());
+        }
+        return null;
+    }
+
+    public Category findByValue(String value) {
+        QueryBuilder<Category, Long> queryBuilder = mCategoryDao.queryBuilder();
+        try {
+            queryBuilder.where().eq(Contract.CCategory.VALUE, value);
+            return mCategoryDao.queryForFirst(queryBuilder.prepare());
         } catch (SQLException e) {
             Logger.error(e.getMessage());
         }
@@ -54,10 +98,20 @@ public class CategoryManager implements IDataManager<Category> {
     @Override
     public List<Category> getAll() {
         try {
-            mCategoryeDao.queryForAll();
+            mCategoryDao.queryForAll();
         } catch (SQLException e) {
             Logger.error(e.getMessage());
         }
         return new ArrayList<Category>();
+    }
+
+    public Category createCategory(Long id, String value, String description, Long timestamp) {
+        Category category = new Category();
+        category.setId(id);
+        category.setValue(value);
+        category.setDescription(description);
+        category.setTimestamp(timestamp);
+
+        return category;
     }
 }

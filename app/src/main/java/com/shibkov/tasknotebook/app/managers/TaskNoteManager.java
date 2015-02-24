@@ -1,7 +1,9 @@
 package com.shibkov.tasknotebook.app.managers;
 
+import android.content.Context;
 import com.j256.ormlite.dao.Dao;
 import com.shibkov.tasknotebook.app.database.DatabaseHelper;
+import com.shibkov.tasknotebook.app.models.Category;
 import com.shibkov.tasknotebook.app.models.TaskNote;
 import com.shibkov.tasknotebook.app.utils.Logger;
 
@@ -29,7 +31,12 @@ public class TaskNoteManager implements IDataManager<TaskNote> {
     @Override
     public void add(TaskNote taskNote) {
         try {
-            mCategoryManager.add(taskNote.getCategory());
+            Category category = mCategoryManager.findByValue(taskNote.getCategory().getValue());
+            if (category != null) {
+                taskNote.setCategory(category);
+            } else {
+                mCategoryManager.add(taskNote.getCategory());
+            }
             mTaskNoteDao.createOrUpdate(taskNote);
         } catch (SQLException e) {
             Logger.error(e.getMessage());
