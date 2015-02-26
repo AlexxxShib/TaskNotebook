@@ -11,6 +11,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.HorizontalScrollView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.shibkov.tasknotebook.app.R;
 
@@ -45,6 +46,8 @@ public class SlidingTabLayout extends HorizontalScrollView {
 
     private int mTabViewLayoutId;
     private int mTabViewTextViewId;
+
+    private boolean mDistributeEvenly;
 
     private ViewPager mViewPager;
     private ViewPager.OnPageChangeListener mViewPagerPageChangeListener;
@@ -98,6 +101,10 @@ public class SlidingTabLayout extends HorizontalScrollView {
      */
     public void setDividerColors(int... colors) {
         mTabStrip.setDividerColors(colors);
+    }
+
+    public void setDistributeEvenly(boolean distributeEvenly) {
+        mDistributeEvenly = distributeEvenly;
     }
 
     /**
@@ -186,6 +193,10 @@ public class SlidingTabLayout extends HorizontalScrollView {
 
             if (tabTitleView == null && TextView.class.isInstance(tabView)) {
                 tabTitleView = (TextView) tabView;
+            }
+
+            if (mDistributeEvenly) {
+                tabView.setLayoutParams(new LinearLayout.LayoutParams(0, LayoutParams.WRAP_CONTENT, 1f));
             }
 
             tabTitleView.setText(adapter.getPageTitle(i));
