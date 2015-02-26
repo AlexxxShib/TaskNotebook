@@ -1,68 +1,58 @@
 package com.shibkov.tasknotebook.app;
 
-import android.content.ContentValues;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import com.shibkov.tasknotebook.app.database.Contract;
-import com.shibkov.tasknotebook.app.database.DatabaseHelper;
-import com.shibkov.tasknotebook.app.database.DatabaseManager;
+import com.shibkov.tasknotebook.app.views.SlidingTabLayout;
+import com.shibkov.tasknotebook.app.views.adapters.ViewPagerAdapter;
 
 
 public class TestActivity extends ActionBarActivity {
+
+    private Toolbar toolbar;
+    private ViewPager pager;
+    private ViewPagerAdapter adapter;
+    private SlidingTabLayout tabs;
+    private CharSequence Titles[] = {"Home", "Events"};
+    private int Numboftabs = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
-    }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
+        toolbar = (Toolbar) findViewById(R.id.tool_bar);
+        setSupportActionBar(toolbar);
+        // Creating The ViewPagerAdapter and Passing Fragment Manager, Titles fot the Tabs and Number Of Tabs.
+        adapter = new ViewPagerAdapter(getSupportFragmentManager(), Titles, Numboftabs);
 
-//        testDBInsert();
-    }
+        // Assigning ViewPager View and setting the adapter
+        pager = (ViewPager) findViewById(R.id.pager);
+        pager.setAdapter(adapter);
 
-    /*private void testDBInsert() {
-        DatabaseManager.initializeInstance(new DatabaseHelper(this));
-        SQLiteDatabase database = DatabaseManager.getInstance().openWritableDB();
+        // Assiging the Sliding Tab Layout View
+        tabs = (SlidingTabLayout) findViewById(R.id.tabs);
+//        tabs.setDistributeEvenly(true); // To make the Tabs Fixed set this true, This makes the tabs Space Evenly in Available width
 
-
-        for (int i = 0; i < 10; i++) {
-            ContentValues values = new ContentValues();
-            values.put(Contract.CTaskNote._ID, i);
-            values.put(Contract.CTaskNote.CATEGORY, i);
-            values.put(Contract.CTaskNote.IS_DONE, i);
-            values.put(Contract.CTaskNote.JSON_OBJECT, i + "_object");
-
-            database.insert(Contract.CTaskNote.TABLE_NAME, null, values);
-            Log.i("write db", "id " + values.get(Contract.CTaskNote._ID));
-        }
-
-        DatabaseManager.getInstance().closeDatabase();
-
-        database = DatabaseManager.getInstance().openReadableDB();
-        Cursor cursor = database.rawQuery("SELECT * FROM " + Contract.CTaskNote.TABLE_NAME, null);
-
-        if (cursor != null ) {
-            if  (cursor.moveToFirst()) {
-                do {
-                    Log.i("read db",
-                            String.valueOf(cursor.getInt(cursor.getColumnIndex(Contract.CTaskNote._ID))) + " "
-                                    + cursor.getInt(cursor.getColumnIndex(Contract.CTaskNote.CATEGORY)) + " "
-                                    + cursor.getInt(cursor.getColumnIndex(Contract.CTaskNote.IS_DONE)) + " "
-                                    + cursor.getString(cursor.getColumnIndex(Contract.CTaskNote.JSON_OBJECT)) + " ");
-                }while (cursor.moveToNext());
+        // Setting Custom Color for the Scroll bar indicator of the Tab View
+        tabs.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
+            @Override
+            public int getIndicatorColor(int position) {
+                return getResources().getColor(R.color.accent);
             }
-            cursor.close();
-        }
-        DatabaseManager.getInstance().closeDatabase();
-    }*/
+
+            @Override
+            public int getDividerColor(int position) {
+                return getResources().getColor(R.color.accent);//todo change color
+            }
+        });
+
+        // Setting the ViewPager For the SlidingTabsLayout
+        tabs.setViewPager(pager);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
