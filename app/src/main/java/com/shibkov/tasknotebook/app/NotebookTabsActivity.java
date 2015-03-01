@@ -12,7 +12,7 @@ import com.shibkov.tasknotebook.app.views.widgets.SlidingTabLayout;
 import com.shibkov.tasknotebook.app.views.adapters.ViewPagerAdapter;
 
 
-public class TaskNotebookTabsActivity extends ActionBarActivity {
+public class NotebookTabsActivity extends ActionBarActivity {
 
     private ViewPager pager;
     private ViewPagerAdapter adapter;
@@ -21,7 +21,7 @@ public class TaskNotebookTabsActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_task_notebook);
+        setContentView(R.layout.activity_notebook_tabs);
 
         setSupportActionBar((Toolbar) findViewById(R.id.tool_bar));
 

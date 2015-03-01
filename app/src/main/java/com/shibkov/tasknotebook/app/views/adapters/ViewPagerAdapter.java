@@ -1,15 +1,11 @@
 package com.shibkov.tasknotebook.app.views.adapters;
 
-import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import com.shibkov.tasknotebook.app.database.DatabaseManager;
 import com.shibkov.tasknotebook.app.fragments.CategoryFragment;
-import com.shibkov.tasknotebook.app.managers.CategoryManager;
 import com.shibkov.tasknotebook.app.models.Category;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
