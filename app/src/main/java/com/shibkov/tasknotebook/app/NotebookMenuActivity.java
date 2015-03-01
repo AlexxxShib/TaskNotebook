@@ -10,37 +10,25 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import com.shibkov.tasknotebook.app.views.adapters.MyAdapter;
+import com.shibkov.tasknotebook.app.database.DatabaseManager;
+import com.shibkov.tasknotebook.app.managers.CategoryManager;
+import com.shibkov.tasknotebook.app.views.adapters.MainMenuAdapter;
 
 /**
  * Created by alexxxshib
  */
 public class NotebookMenuActivity extends ActionBarActivity {
 
-    String TITLES[] = {"Home","Events","Mail","Shop","Travel"};
-    int ICONS[] = {
-            R.drawable.ic_home,
-            R.drawable.ic_events,
-            R.drawable.ic_mail,
-            R.drawable.ic_shop,
-            R.drawable.ic_travel
-    };
-
-    //Similarly we Create a String Resource for the name and email in the header view
-    //And we also create a int resource for profile picture in the header view
-
     String NAME = "Akash Bangad";
     String EMAIL = "akash.bangad@android4devs.com";
     int PROFILE = R.drawable.aka;
 
-    private Toolbar toolbar;                              // Declaring the Toolbar Object
+    RecyclerView mRecyclerView;
+    RecyclerView.Adapter mAdapter;
+    RecyclerView.LayoutManager mLayoutManager;
+    DrawerLayout Drawer;
 
-    RecyclerView mRecyclerView;                           // Declaring RecyclerView
-    RecyclerView.Adapter mAdapter;                        // Declaring Adapter For Recycler View
-    RecyclerView.LayoutManager mLayoutManager;            // Declaring Layout Manager as a linear layout manager
-    DrawerLayout Drawer;                                  // Declaring DrawerLayout
-
-    ActionBarDrawerToggle mDrawerToggle;                  // Declaring Action Bar Drawer Toggle
+    ActionBarDrawerToggle mDrawerToggle;
 
 
     @Override
@@ -48,26 +36,25 @@ public class NotebookMenuActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notebook_menu);
 
-        toolbar = (Toolbar) findViewById(R.id.tool_bar);
+        DatabaseManager.initializeInstance(this);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
 
-        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view); // Assigning the RecyclerView Object to the xml View
+        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        mRecyclerView.setHasFixedSize(true);
 
-        mRecyclerView.setHasFixedSize(true);                            // Letting the system know that the list objects are of fixed size
+        CategoryManager mCategoryManager = new CategoryManager(DatabaseManager.getInstance().getHelper());
+        mCategoryManager.initDefaultCategories(this);
 
-        mAdapter = new MyAdapter(TITLES,ICONS,NAME,EMAIL,PROFILE);       // Creating the Adapter of MyAdapter class(which we are going to see in a bit)
-        // And passing the titles,icons,header view name, header view email,
-        // and header view profile picture
+        mAdapter = new MainMenuAdapter(mCategoryManager.getAll(),NAME,EMAIL,PROFILE);
+        mRecyclerView.setAdapter(mAdapter);
 
-        mRecyclerView.setAdapter(mAdapter);                              // Setting the adapter to RecyclerView
+        mLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mLayoutManager);
 
-        mLayoutManager = new LinearLayoutManager(this);                 // Creating a layout Manager
-
-        mRecyclerView.setLayoutManager(mLayoutManager);                 // Setting the layout Manager
-
-
-        Drawer = (DrawerLayout) findViewById(R.id.drawer_layout);        // Drawer object Assigned to the view
-        mDrawerToggle = new ActionBarDrawerToggle(this,Drawer,toolbar,R.string.abc_open_drawer,R.string.abc_close_drawer){
+        Drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerToggle = new ActionBarDrawerToggle(this,Drawer, toolbar,R.string.abc_open_drawer,R.string.abc_close_drawer){
 
             @Override
             public void onDrawerOpened(View drawerView) {
@@ -78,31 +65,29 @@ public class NotebookMenuActivity extends ActionBarActivity {
             public void onDrawerClosed(View drawerView) {
                 super.onDrawerClosed(drawerView);
             }
+        };
+        Drawer.setDrawerListener(mDrawerToggle);
+        mDrawerToggle.syncState();
 
+    }
 
-
-        }; // Drawer Toggle Object Made
-        Drawer.setDrawerListener(mDrawerToggle); // Drawer Listener set to the Drawer toggle
-        mDrawerToggle.syncState();               // Finally we set the drawer toggle sync State
-
+    @Override
+    protected void onDestroy() {
+        DatabaseManager.getInstance().closeDatabase();
+        super.onDestroy();
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
