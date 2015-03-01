@@ -6,17 +6,17 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import com.shibkov.tasknotebook.app.database.DatabaseManager;
+import com.shibkov.tasknotebook.app.managers.CategoryManager;
 import com.shibkov.tasknotebook.app.views.widgets.SlidingTabLayout;
 import com.shibkov.tasknotebook.app.views.adapters.ViewPagerAdapter;
 
 
-public class TaskNotebookActivity extends ActionBarActivity {
+public class TaskNotebookTabsActivity extends ActionBarActivity {
 
     private ViewPager pager;
     private ViewPagerAdapter adapter;
     private SlidingTabLayout tabs;
-    private CharSequence Titles[] = {"Home", "Events"};
-    private int Numboftabs = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +24,12 @@ public class TaskNotebookActivity extends ActionBarActivity {
         setContentView(R.layout.activity_task_notebook);
 
         setSupportActionBar((Toolbar) findViewById(R.id.tool_bar));
-        adapter = new ViewPagerAdapter(getSupportFragmentManager(), Titles, Numboftabs);
+
+        DatabaseManager.initializeInstance(this);
+
+        CategoryManager mCategoryManager = new CategoryManager(DatabaseManager.getInstance().getHelper());
+        mCategoryManager.initDefaultCategories(this);
+        adapter = new ViewPagerAdapter(getSupportFragmentManager(), mCategoryManager.getAll());
 
         pager = (ViewPager) findViewById(R.id.pager);
         pager.setAdapter(adapter);
@@ -37,7 +42,6 @@ public class TaskNotebookActivity extends ActionBarActivity {
             public int getIndicatorColor(int position) {
                 return getResources().getColor(R.color.accent);
             }
-
             @Override
             public int getDividerColor(int position) {
                 return getResources().getColor(R.color.accent);//todo change color
@@ -45,6 +49,12 @@ public class TaskNotebookActivity extends ActionBarActivity {
         });
 
         tabs.setViewPager(pager);
+    }
+
+    @Override
+    protected void onDestroy() {
+        DatabaseManager.getInstance().closeDatabase();
+        super.onDestroy();
     }
 
     @Override
@@ -56,11 +66,9 @@ public class TaskNotebookActivity extends ActionBarActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 }

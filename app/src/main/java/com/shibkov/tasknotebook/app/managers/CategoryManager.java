@@ -2,6 +2,7 @@ package com.shibkov.tasknotebook.app.managers;
 
 import android.content.Context;
 import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.dao.GenericRawResults;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.shibkov.tasknotebook.app.R;
 import com.shibkov.tasknotebook.app.database.Contract;
@@ -29,29 +30,34 @@ public class CategoryManager implements IDataManager<Category> {
 
     /**
      * Init default values for categories
+     *
      * @param context for init from strings of application
      */
     public void initDefaultCategories(Context context) {
+        Category oneDay = createCategory(0l, context.getString(R.string.abc_one_day_value),
+                context.getString(R.string.abc_one_day_description), 1000l * 3600l * 24l);
+        add(oneDay);
+
+        Category oneWeek = createCategory(1l, context.getString(R.string.abc_one_week_value),
+                context.getString(R.string.abc_one_week_description), 1000l * 3600l * 24l * 7l);
+        add(oneWeek);
+        Category oneMonth = createCategory(2l, context.getString(R.string.abc_one_month_value),
+                context.getString(R.string.abc_one_month_description), 1000l * 3600l * 24l * 30l);
+        add(oneMonth);
 
         try {
-            if (!mCategoryDao.idExists(0L)) {
-                Category oneDay = createCategory(0l, context.getString(R.string.abc_one_day_value),
-                        context.getString(R.string.abc_one_day_description), 1000l * 3600l * 24l);
-                add(oneDay);
-            }
 
-            if (!mCategoryDao.idExists(1L)) {
-                Category oneWeek = createCategory(1l, context.getString(R.string.abc_one_week_value),
-                        context.getString(R.string.abc_one_week_description), 1000l * 3600l * 24l * 7l);
-                add(oneWeek);
-            }
-            if (!mCategoryDao.idExists(2L)) {
-                Category oneMonth = createCategory(2l, context.getString(R.string.abc_one_month_value),
-                        context.getString(R.string.abc_one_month_description), 1000l * 3600l * 24l * 30l);
-                add(oneMonth);
+            GenericRawResults<String[]> result = mCategoryDao.queryRaw("select * from categories_table");
+            Logger.info("Print categories");
+            for (String[] row : result.getResults()) {
+                String str = "";
+                for (String col : row) {
+                    str += col + " ";
+                }
+                Logger.info(str);
             }
         } catch (SQLException e) {
-            Logger.error(e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -98,7 +104,7 @@ public class CategoryManager implements IDataManager<Category> {
     @Override
     public List<Category> getAll() {
         try {
-            mCategoryDao.queryForAll();
+            return mCategoryDao.queryForAll();
         } catch (SQLException e) {
             Logger.error(e.getMessage());
         }

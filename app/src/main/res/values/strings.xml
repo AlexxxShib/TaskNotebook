@@ -16,7 +16,7 @@
     <string name="abc_one_week_value">На неделю</string>
     <string name="abc_one_week_description">Задачи целую неделю!</string>
 
-    <string name="abc_one_month_value">На день</string>
+    <string name="abc_one_month_value">На месяц</string>
     <string name="abc_one_month_description">Задачи, которые необходимо выполнить в течении месяца!</string>
 
 </resources>

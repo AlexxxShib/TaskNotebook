@@ -1,12 +1,7 @@
 package com.shibkov.tasknotebook.app.database;
 
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
-import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
-
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Created by alexxxshib
@@ -23,6 +18,7 @@ public class DatabaseManager {
         if (cInstance == null) {
             cInstance = new DatabaseManager();
             mDatabaseHelper = OpenHelperManager.getHelper(context, DatabaseHelper.class);
+            mDatabaseHelper.clearTables();
         }
     }
 

@@ -58,6 +58,15 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         }
     }
 
+    public void clearTables() {
+        try {
+            TableUtils.clearTable(getConnectionSource(), TaskNote.class);
+            TableUtils.clearTable(getConnectionSource(), Category.class);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public Dao<TaskNote, Long> getTaskNoteDao() {
         if (mDaoHolder.taskNoteDao == null) {
             try {
