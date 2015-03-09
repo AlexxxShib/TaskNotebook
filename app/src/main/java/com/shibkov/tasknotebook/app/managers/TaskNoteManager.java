@@ -1,7 +1,8 @@
 package com.shibkov.tasknotebook.app.managers;
 
-import android.content.Context;
 import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.stmt.QueryBuilder;
+import com.shibkov.tasknotebook.app.database.Contract;
 import com.shibkov.tasknotebook.app.database.DatabaseHelper;
 import com.shibkov.tasknotebook.app.models.Category;
 import com.shibkov.tasknotebook.app.models.TaskNote;
@@ -17,14 +18,13 @@ import java.util.List;
 public class TaskNoteManager implements IDataManager<TaskNote> {
 
     private final Dao<TaskNote, Long> mTaskNoteDao;
+    private final Dao<Category, Long> mCategoryDao;
 
     private final CategoryManager mCategoryManager;
 
     public TaskNoteManager(DatabaseHelper helper) {
         mTaskNoteDao = helper.getTaskNoteDao();
-        if (mTaskNoteDao == null) {
-            throw new IllegalStateException("Dao TaskNote not initialized!");
-        }
+        mCategoryDao = helper.getCategoryDao();
         mCategoryManager = new CategoryManager(helper);
     }
 
@@ -66,6 +66,19 @@ public class TaskNoteManager implements IDataManager<TaskNote> {
     public List<TaskNote> getAll() {
         try {
             return mTaskNoteDao.queryForAll();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<TaskNote>();
+    }
+
+    public List<TaskNote> getByCategory(Category category) {
+        QueryBuilder<TaskNote, Long> taskBuilder = mTaskNoteDao.queryBuilder();
+        QueryBuilder<Category, Long> categoryBuilder = mCategoryDao.queryBuilder();
+        try {
+            categoryBuilder.where().eq(Contract.CCategory._ID, category.getId());
+            taskBuilder.join(categoryBuilder);
+            return mTaskNoteDao.query(taskBuilder.prepare());
         } catch (SQLException e) {
             e.printStackTrace();
         }

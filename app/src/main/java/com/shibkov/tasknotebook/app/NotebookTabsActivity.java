@@ -6,12 +6,12 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import com.shibkov.tasknotebook.app.database.DatabaseManager;
-import com.shibkov.tasknotebook.app.managers.CategoryManager;
 import com.shibkov.tasknotebook.app.views.widgets.SlidingTabLayout;
 import com.shibkov.tasknotebook.app.views.adapters.ViewPagerAdapter;
 
-
+/**
+ * Not worked
+ */
 public class NotebookTabsActivity extends ActionBarActivity {
 
     private ViewPager pager;
@@ -25,11 +25,11 @@ public class NotebookTabsActivity extends ActionBarActivity {
 
         setSupportActionBar((Toolbar) findViewById(R.id.tool_bar));
 
-        DatabaseManager.initializeInstance(this);
+//        DatabaseManager.initializeInstance(this);
 
-        CategoryManager mCategoryManager = new CategoryManager(DatabaseManager.getInstance().getHelper());
-        mCategoryManager.initDefaultCategories(this);
-        adapter = new ViewPagerAdapter(getSupportFragmentManager(), mCategoryManager.getAll());
+//        CategoryManager mCategoryManager = new CategoryManager(DatabaseManager.getInstance().getHelper());
+//        mCategoryManager.initDefaultCategories(this);
+//        adapter = new ViewPagerAdapter(getSupportFragmentManager(), mCategoryManager.getAll());
 
         pager = (ViewPager) findViewById(R.id.pager);
         pager.setAdapter(adapter);
@@ -53,7 +53,7 @@ public class NotebookTabsActivity extends ActionBarActivity {
 
     @Override
     protected void onDestroy() {
-        DatabaseManager.getInstance().closeDatabase();
+//        DatabaseManager.getInstance().closeDatabase();
         super.onDestroy();
     }
 

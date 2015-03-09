@@ -18,11 +18,11 @@ public class TaskNote {
     private long id;
 
     @DatabaseField(columnName = DATE, canBeNull = false, dataType = DataType.DATE)
-    private Date date;
+    private Date date = new Date();
     @DatabaseField(columnName = CATEGORY, canBeNull = false, foreign = true)
     private Category category;
-    @DatabaseField(columnName = IS_DONE)
-    private boolean isDone;
+    @DatabaseField(columnName = IS_DONE, dataType = DataType.BOOLEAN)
+    private boolean isDone = false;
 
     @DatabaseField(columnName = HEADER, canBeNull = false)
     private String header;

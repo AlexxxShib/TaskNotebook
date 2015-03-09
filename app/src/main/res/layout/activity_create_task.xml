@@ -1,0 +1,28 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                tools:context="com.shibkov.tasknotebook.app.CreateTaskActivity">
+
+    <include
+            android:id="@+id/tool_bar"
+            layout="@layout/tool_bar"/>
+
+    <EditText
+            android:id="@+id/headerEdit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="11dp"
+            android:singleLine="true"
+            android:hint="@string/abc_edit_header_hint"
+            />
+    <EditText
+            android:id="@+id/descriptionEdit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="11dp"
+            android:background="@null"
+            android:hint="@string/abc_edit_description_hint"/>
+
+</LinearLayout>

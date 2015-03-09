@@ -14,10 +14,10 @@ import static com.shibkov.tasknotebook.app.database.Contract.CCategory.*;
 @DatabaseTable(tableName = TABLE_NAME)
 public class Category implements Parcelable{
 
-    @DatabaseField(columnName = _ID, index = true, generatedId = true)
+    @DatabaseField(columnName = _ID, index = true, id = true)
     private Long id;
 
-    @DatabaseField(columnName = VALUE, canBeNull = false)
+    @DatabaseField(columnName = VALUE, canBeNull = false, index = true)
     private String value;
 
     @DatabaseField(columnName = DESCRIPTION)

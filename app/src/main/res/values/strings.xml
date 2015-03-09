@@ -8,18 +8,22 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_test">TestActivity</string>
-
     <string name="abc_open_drawer">Open Drawer</string>
     <string name="abc_close_drawer">Close Drawer</string>
 
-    <!--Categories-->
+    <!-- Categories -->
     <string name="abc_one_day_value">На день</string>
     <string name="abc_one_day_description">Задачи, которые необходимо выполнить за день!</string>
-
     <string name="abc_one_week_value">На неделю</string>
     <string name="abc_one_week_description">Задачи целую неделю!</string>
-
     <string name="abc_one_month_value">На месяц</string>
     <string name="abc_one_month_description">Задачи, которые необходимо выполнить в течении месяца!</string>
+
+    <!--interface suggests-->
+    <string name="abc_edit_header_hint">Введите заголовок задачи…</string>
+    <string name="abc_edit_description_hint">Добавьте описание к поставленной цели!</string>
+
+    <!--toast messages-->
+    <string name="abc_need_header">Для создания задания необходим заголовок!</string>
 
 </resources>

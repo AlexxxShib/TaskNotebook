@@ -1,7 +1,6 @@
 package com.shibkov.tasknotebook.app;
 
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,14 +9,13 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import com.shibkov.tasknotebook.app.database.DatabaseManager;
+import com.shibkov.tasknotebook.app.fragments.CategoryFragment;
 import com.shibkov.tasknotebook.app.managers.CategoryManager;
 import com.shibkov.tasknotebook.app.models.Category;
 import com.shibkov.tasknotebook.app.utils.Logger;
 import com.shibkov.tasknotebook.app.views.adapters.MainMenuAdapter;
-import com.shibkov.tasknotebook.app.views.adapters.ViewPagerAdapter;
 
 import java.util.List;
 
@@ -33,12 +31,15 @@ public class NotebookMenuActivity extends ActionBarActivity {
 
     private ActionBarDrawerToggle mDrawerToggle;
 
+    private CategoryManager mCategoryManager;
+    private List<Category> mCategoryList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notebook_menu);
 
-        DatabaseManager.initializeInstance(this);
+        mCategoryManager = new CategoryManager(DatabaseManager.getHelper(this));
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
@@ -46,15 +47,17 @@ public class NotebookMenuActivity extends ActionBarActivity {
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true);
 
-        CategoryManager mCategoryManager = new CategoryManager(DatabaseManager.getInstance().getHelper());
         mCategoryManager.initDefaultCategories(this);
+        mCategoryList = mCategoryManager.getAll();
 
-        final List<Category> categories = mCategoryManager.getAll();
+        changeFragment(mCategoryList.get(0));
 
-        mAdapter = new MainMenuAdapter(this, categories, new MainMenuAdapter.MenuClickListener() {
+        mAdapter = new MainMenuAdapter(this, mCategoryList, new MainMenuAdapter.MenuClickListener() {
             @Override
             public void onItemClicked(Category category) {
                 Logger.info(String.format("Selected %s item", category.getValue()));
+                changeFragment(category);
+                Drawer.closeDrawers();
             }
         });
         mRecyclerView.setAdapter(mAdapter);
@@ -78,9 +81,15 @@ public class NotebookMenuActivity extends ActionBarActivity {
         mDrawerToggle.syncState();
     }
 
+    private void changeFragment(Category category) {
+        getSupportActionBar().setTitle(category.getValue());
+        CategoryFragment fragment = CategoryFragment.newInstance(category);
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commitAllowingStateLoss();
+    }
+
     @Override
     protected void onDestroy() {
-        DatabaseManager.getInstance().closeDatabase();
+        DatabaseManager.closeDatabase();
         super.onDestroy();
     }
 

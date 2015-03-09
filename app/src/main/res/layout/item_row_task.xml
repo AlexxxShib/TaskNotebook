@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <TextView
+            android:layout_width="55dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="start"
+            android:paddingLeft="8dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#ff585858"
+            android:textSize="30dp"
+            android:text="11."
+            android:id="@+id/numberRow"/>
+
+    <LinearLayout
+            android:paddingTop="4dp"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingRight="20dp"
+                android:singleLine="true"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#ff585858"
+                android:text="Medium Text"
+                android:id="@+id/headerRow"/>
+
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingRight="20dp"
+                android:singleLine="true"
+                android:textAppearance="?android:attr/textAppearanceListItem"
+                android:textColor="#ff848484"
+                android:textSize="14sp"
+                android:text="Medium Text"
+                android:id="@+id/descriptionRow"/>
+
+    </LinearLayout>
+
+</LinearLayout>
