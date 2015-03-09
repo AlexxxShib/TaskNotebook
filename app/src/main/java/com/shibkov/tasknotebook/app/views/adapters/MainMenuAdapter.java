@@ -1,5 +1,6 @@
 package com.shibkov.tasknotebook.app.views.adapters;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,47 +17,49 @@ import java.util.List;
  */
 public class MainMenuAdapter extends RecyclerView.Adapter<MainMenuAdapter.ViewHolder> {
 
-    private static final int TYPE_HEADER = 0;
+//    private static final int TYPE_HEADER = 0;
     private static final int TYPE_ITEM = 1;
+    private static final String DEFAULT_ICON = "ic_calendar";
 
-    private final List<Category> mCategories;
+    public interface MenuClickListener {
+        void onItemClicked(Category category);
+    }
 
-    private String name;
-    private int profile;
-    private String email;
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        int holderId;
 
-
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        int Holderid;
-
-        TextView textView;
+        TextView header;
+        TextView description;
         ImageView imageView;
-        ImageView profile;
-        TextView Name;
-        TextView email;
+
+        Category category;
 
         public ViewHolder(View itemView, int ViewType) {
             super(itemView);
 
             if (ViewType == TYPE_ITEM) {
-                textView = (TextView) itemView.findViewById(R.id.rowText);
+                header = (TextView) itemView.findViewById(R.id.headerRow);
+                description = (TextView) itemView.findViewById(R.id.descriptionRow);
                 imageView = (ImageView) itemView.findViewById(R.id.rowIcon);
-                Holderid = 1;
-            } else {
-
-                Name = (TextView) itemView.findViewById(R.id.name);
-                email = (TextView) itemView.findViewById(R.id.email);
-                profile = (ImageView) itemView.findViewById(R.id.circleView);
-                Holderid = 0;
+                holderId = 1;
             }
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            mMenuListener.onItemClicked(category);
         }
     }
 
-    public MainMenuAdapter(List<Category> categories, String Name, String Email, int Profile) {
+    private final Context mContext;
+    private final List<Category> mCategories;
+    private final MenuClickListener mMenuListener;
+
+    public MainMenuAdapter(Context context, List<Category> categories, MenuClickListener listener) {
+        mContext = context;
         mCategories = categories;
-        name = Name;
-        email = Email;
-        profile = Profile;
+        mMenuListener = listener;
     }
 
     @Override
@@ -66,9 +69,6 @@ public class MainMenuAdapter extends RecyclerView.Adapter<MainMenuAdapter.ViewHo
             View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_row_menu, parent, false);
             return new ViewHolder(v, viewType);
 
-        } else if (viewType == TYPE_HEADER) {
-            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.header_menu, parent, false);
-            return new ViewHolder(v, viewType);
         }
         return null;
 
@@ -77,35 +77,36 @@ public class MainMenuAdapter extends RecyclerView.Adapter<MainMenuAdapter.ViewHo
     @Override
     public void onBindViewHolder(MainMenuAdapter.ViewHolder holder, int position) {
 
-        if (holder.Holderid == 1) {
-            holder.textView.setText(mCategories.get(position - 1).getValue());
-//            holder.imageView.setImageResource(mIcons[position - 1]);
+        if (holder.holderId == 1) {
+            Category category = mCategories.get(position);
+            String iconName = category.getIconName();
 
-        } else {
-            holder.profile.setImageResource(profile);
-            holder.Name.setText(name);
-            holder.email.setText(email);
+            if (iconName == null) iconName = DEFAULT_ICON;
+            int imageResId = mContext.getResources().getIdentifier(iconName, "drawable", mContext.getPackageName());
+
+            holder.header.setText(category.getValue());
+            holder.imageView.setImageResource(imageResId);
+            holder.description.setText(category.getDescription());
+            holder.category = category;
         }
     }
 
-    // This method returns the number of items present in the list
     @Override
     public int getItemCount() {
-        return mCategories.size() + 1; // the number of items in the list will be +1 the titles including the header view.
+        return mCategories.size();
     }
 
 
-    // Witht the following method we check what type of view is being passed
     @Override
     public int getItemViewType(int position) {
-        if (isPositionHeader(position))
-            return TYPE_HEADER;
-
+//        if (isPositionHeader(position))
+//            return TYPE_HEADER;
+//
         return TYPE_ITEM;
     }
 
-    private boolean isPositionHeader(int position) {
-        return position == 0;
-    }
+//    private boolean isPositionHeader(int position) {
+//        return position == 0;
+//    }
 
 }

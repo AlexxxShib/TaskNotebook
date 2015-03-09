@@ -10,10 +10,12 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import com.shibkov.tasknotebook.app.database.DatabaseManager;
 import com.shibkov.tasknotebook.app.managers.CategoryManager;
 import com.shibkov.tasknotebook.app.models.Category;
+import com.shibkov.tasknotebook.app.utils.Logger;
 import com.shibkov.tasknotebook.app.views.adapters.MainMenuAdapter;
 import com.shibkov.tasknotebook.app.views.adapters.ViewPagerAdapter;
 
@@ -24,21 +26,12 @@ import java.util.List;
  */
 public class NotebookMenuActivity extends ActionBarActivity {
 
-    //tests
-    private String NAME = "Akash Bangad";
-    private String EMAIL = "akash.bangad@android4devs.com";
-    private int PROFILE = R.drawable.aka;
-
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private DrawerLayout Drawer;
 
     private ActionBarDrawerToggle mDrawerToggle;
-
-    private ViewPager pager;
-    private ViewPagerAdapter adapter;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +51,12 @@ public class NotebookMenuActivity extends ActionBarActivity {
 
         final List<Category> categories = mCategoryManager.getAll();
 
-        mAdapter = new MainMenuAdapter(categories,NAME,EMAIL,PROFILE);
+        mAdapter = new MainMenuAdapter(this, categories, new MainMenuAdapter.MenuClickListener() {
+            @Override
+            public void onItemClicked(Category category) {
+                Logger.info(String.format("Selected %s item", category.getValue()));
+            }
+        });
         mRecyclerView.setAdapter(mAdapter);
 
         mLayoutManager = new LinearLayoutManager(this);
@@ -78,18 +76,6 @@ public class NotebookMenuActivity extends ActionBarActivity {
         };
         Drawer.setDrawerListener(mDrawerToggle);
         mDrawerToggle.syncState();
-
-        adapter = new ViewPagerAdapter(getSupportFragmentManager(), categories);
-        pager = (ViewPager) findViewById(R.id.pager);
-        pager.setAdapter(adapter);
-
-        mRecyclerView.setRecyclerListener(new RecyclerView.RecyclerListener() {
-            @Override
-            public void onViewRecycled(RecyclerView.ViewHolder viewHolder) {
-                int position = viewHolder.getPosition() - 1;
-                if (position != -1) pager.setCurrentItem(position);
-            }
-        });
     }
 
     @Override

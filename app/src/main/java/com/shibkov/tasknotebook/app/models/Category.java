@@ -26,6 +26,9 @@ public class Category implements Parcelable{
     @DatabaseField(columnName = INTERVAL)
     private Long interval;
 
+    @DatabaseField(columnName = ICON_NAME)
+    private String iconName;
+
     public Category(){};
 
     public Long getId() {
@@ -58,6 +61,14 @@ public class Category implements Parcelable{
 
     public void setInterval(Long interval) {
         this.interval = interval;
+    }
+
+    public String getIconName() {
+        return iconName;
+    }
+
+    public void setIconName(String iconName) {
+        this.iconName = iconName;
     }
 
     public Category(Parcel parcel) {

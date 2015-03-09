@@ -25,5 +25,6 @@ public class Contract {
         public static final String VALUE       = "value";
         public static final String DESCRIPTION = "description";
         public static final String INTERVAL = "timestamp";
+        public static final String ICON_NAME = "icon_name";
     }
 }
