@@ -116,7 +116,7 @@ public class CategoryManager implements IDataManager<Category> {
         category.setId(id);
         category.setValue(value);
         category.setDescription(description);
-        category.setTimestamp(timestamp);
+        category.setInterval(timestamp);
 
         return category;
     }

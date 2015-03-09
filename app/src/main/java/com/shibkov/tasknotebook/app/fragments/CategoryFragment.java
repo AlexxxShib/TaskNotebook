@@ -29,7 +29,7 @@ public class CategoryFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_category, container, true);
+        View view = inflater.inflate(R.layout.fragment_category, container, false);
         ((TextView)view.findViewById(R.id.text_main)).setText(
                 ((Category)getArguments().getParcelable(CATEGORY_ARG_KEY)).getValue()
         );

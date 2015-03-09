@@ -23,8 +23,8 @@ public class Category implements Parcelable{
     @DatabaseField(columnName = DESCRIPTION)
     private String description;
 
-    @DatabaseField(columnName = TIMESTAMP)
-    private Long timestamp;
+    @DatabaseField(columnName = INTERVAL)
+    private Long interval;
 
     public Category(){};
 
@@ -52,19 +52,19 @@ public class Category implements Parcelable{
         this.description = description;
     }
 
-    public Long getTimestamp() {
-        return timestamp;
+    public Long getInterval() {
+        return interval;
     }
 
-    public void setTimestamp(Long timestamp) {
-        this.timestamp = timestamp;
+    public void setInterval(Long interval) {
+        this.interval = interval;
     }
 
     public Category(Parcel parcel) {
         id = parcel.readLong();
         value = parcel.readString();
         description = parcel.readString();
-        timestamp = parcel.readLong();
+        interval = parcel.readLong();
     }
 
     @Override
@@ -77,7 +77,7 @@ public class Category implements Parcelable{
         dest.writeLong(id);
         dest.writeString(value);
         dest.writeString(description);
-        dest.writeLong(timestamp);
+        dest.writeLong(interval);
     }
 
     public static final Parcelable.Creator<Category> CREATOR = new Creator<Category>() {

@@ -1,6 +1,7 @@
 package com.shibkov.tasknotebook.app;
 
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,23 +13,31 @@ import android.view.MenuItem;
 import android.view.View;
 import com.shibkov.tasknotebook.app.database.DatabaseManager;
 import com.shibkov.tasknotebook.app.managers.CategoryManager;
+import com.shibkov.tasknotebook.app.models.Category;
 import com.shibkov.tasknotebook.app.views.adapters.MainMenuAdapter;
+import com.shibkov.tasknotebook.app.views.adapters.ViewPagerAdapter;
+
+import java.util.List;
 
 /**
  * Created by alexxxshib
  */
 public class NotebookMenuActivity extends ActionBarActivity {
 
-    String NAME = "Akash Bangad";
-    String EMAIL = "akash.bangad@android4devs.com";
-    int PROFILE = R.drawable.aka;
+    //tests
+    private String NAME = "Akash Bangad";
+    private String EMAIL = "akash.bangad@android4devs.com";
+    private int PROFILE = R.drawable.aka;
 
-    RecyclerView mRecyclerView;
-    RecyclerView.Adapter mAdapter;
-    RecyclerView.LayoutManager mLayoutManager;
-    DrawerLayout Drawer;
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+    private DrawerLayout Drawer;
 
-    ActionBarDrawerToggle mDrawerToggle;
+    private ActionBarDrawerToggle mDrawerToggle;
+
+    private ViewPager pager;
+    private ViewPagerAdapter adapter;
 
 
     @Override
@@ -47,15 +56,16 @@ public class NotebookMenuActivity extends ActionBarActivity {
         CategoryManager mCategoryManager = new CategoryManager(DatabaseManager.getInstance().getHelper());
         mCategoryManager.initDefaultCategories(this);
 
-        mAdapter = new MainMenuAdapter(mCategoryManager.getAll(),NAME,EMAIL,PROFILE);
+        final List<Category> categories = mCategoryManager.getAll();
+
+        mAdapter = new MainMenuAdapter(categories,NAME,EMAIL,PROFILE);
         mRecyclerView.setAdapter(mAdapter);
 
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         Drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerToggle = new ActionBarDrawerToggle(this,Drawer, toolbar,R.string.abc_open_drawer,R.string.abc_close_drawer){
-
+        mDrawerToggle = new ActionBarDrawerToggle(this, Drawer, toolbar, R.string.abc_open_drawer, R.string.abc_close_drawer){
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
@@ -69,6 +79,17 @@ public class NotebookMenuActivity extends ActionBarActivity {
         Drawer.setDrawerListener(mDrawerToggle);
         mDrawerToggle.syncState();
 
+        adapter = new ViewPagerAdapter(getSupportFragmentManager(), categories);
+        pager = (ViewPager) findViewById(R.id.pager);
+        pager.setAdapter(adapter);
+
+        mRecyclerView.setRecyclerListener(new RecyclerView.RecyclerListener() {
+            @Override
+            public void onViewRecycled(RecyclerView.ViewHolder viewHolder) {
+                int position = viewHolder.getPosition() - 1;
+                if (position != -1) pager.setCurrentItem(position);
+            }
+        });
     }
 
     @Override
