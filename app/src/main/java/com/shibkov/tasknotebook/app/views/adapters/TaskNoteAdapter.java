@@ -4,7 +4,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+import com.daimajia.swipe.SimpleSwipeListener;
+import com.daimajia.swipe.SwipeLayout;
+import com.daimajia.swipe.adapters.RecyclerSwipeAdapter;
+import com.daimajia.swipe.implments.SwipeItemRecyclerMangerImpl;
 import com.shibkov.tasknotebook.app.R;
 import com.shibkov.tasknotebook.app.models.TaskNote;
 
@@ -13,7 +19,7 @@ import java.util.List;
 /**
  * Created by alexxxshib
  */
-public class TaskNoteAdapter extends RecyclerView.Adapter<TaskNoteAdapter.ViewHolder>{
+public class TaskNoteAdapter extends RecyclerSwipeAdapter<TaskNoteAdapter.ViewHolder> {
 
     public interface TaskListListener {
         void onItemClicked(TaskNote taskNote);
@@ -21,18 +27,22 @@ public class TaskNoteAdapter extends RecyclerView.Adapter<TaskNoteAdapter.ViewHo
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
+        SwipeLayout swipeLayout;
         TextView number;
         TextView header;
         TextView body;
+        Button buttonDelete;
 
         TaskNote taskNote;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
+            swipeLayout = (SwipeLayout) itemView.findViewById(R.id.swipe);
             number = (TextView) itemView.findViewById(R.id.numberRow);
             header = (TextView) itemView.findViewById(R.id.headerRow);
             body   = (TextView) itemView.findViewById(R.id.descriptionRow);
+            buttonDelete = (Button) itemView.findViewById(R.id.delete);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -45,6 +55,7 @@ public class TaskNoteAdapter extends RecyclerView.Adapter<TaskNoteAdapter.ViewHo
 
     private final List<TaskNote> mTaskNoteList;
     private final TaskListListener mTaskListListener;
+    protected SwipeItemRecyclerMangerImpl mItemManger = new SwipeItemRecyclerMangerImpl(this);
 
     public TaskNoteAdapter(List<TaskNote> taskNotes, TaskListListener listener) {
         mTaskNoteList = taskNotes;
@@ -62,18 +73,47 @@ public class TaskNoteAdapter extends RecyclerView.Adapter<TaskNoteAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(TaskNoteAdapter.ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(final TaskNoteAdapter.ViewHolder viewHolder, final int position) {
+        TaskNote taskNote = mTaskNoteList.get(position);
 
-        TaskNote taskNote = mTaskNoteList.get(i);
-
-        viewHolder.number.setText(String.format("%d.", i + 1));
+        viewHolder.swipeLayout.setShowMode(SwipeLayout.ShowMode.PullOut);
+        viewHolder.swipeLayout.addSwipeListener(new SimpleSwipeListener() {
+            @Override
+            public void onOpen(SwipeLayout layout) {
+//                YoYo.with(Techniques.Tada).duration(500).delay(100).playOn(layout.findViewById(R.id.trash));
+            }
+        });
+        viewHolder.swipeLayout.setOnDoubleClickListener(new SwipeLayout.DoubleClickListener() {
+            @Override
+            public void onDoubleClick(SwipeLayout layout, boolean surface) {
+//                Toast.makeText(, "DoubleClick", Toast.LENGTH_SHORT).show();
+            }
+        });
+        viewHolder.buttonDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mItemManger.removeShownLayouts(viewHolder.swipeLayout);
+                mTaskNoteList.remove(position);
+                notifyItemRemoved(position);
+                notifyItemRangeChanged(position, mTaskNoteList.size());
+                mItemManger.closeAllItems();
+                Toast.makeText(view.getContext(), "Deleted " + viewHolder.number.getText().toString() + "!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        viewHolder.number.setText(String.format("%d.", position + 1));
         viewHolder.header.setText(taskNote.getHeader());
         viewHolder.body.setText(taskNote.getBody());
         viewHolder.taskNote = taskNote;
+        mItemManger.bindView(viewHolder.itemView, position);
     }
 
     @Override
     public int getItemCount() {
         return mTaskNoteList.size();
+    }
+
+    @Override
+    public int getSwipeLayoutResourceId(int i) {
+        return R.id.swipe;
     }
 }

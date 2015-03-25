@@ -38,4 +38,6 @@ dependencies {
     compile 'com.j256.ormlite:ormlite-android:4.48'
     compile 'de.hdodenhof:circleimageview:1.2.1'
     compile 'com.github.navasmdc:MaterialDesign:1.4'
+    compile 'com.android.support:support-v4:21.0.3'
+    compile "com.daimajia.swipelayout:library:1.1.8@aar"
 }

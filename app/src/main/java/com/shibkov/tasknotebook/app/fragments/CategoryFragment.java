@@ -74,7 +74,7 @@ public class CategoryFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        if (requestCode == CreateTaskActivity.RESULT_FAILED) {
+        if (requestCode == CreateTaskActivity.RESULT_FAILED || data == null) {
             return;
         }
 
