@@ -8,7 +8,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.shibkov.tasknotebook.app.NotebookMenuActivity">
+            android:name="com.shibkov.tasknotebook.app.CreateCategoryActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

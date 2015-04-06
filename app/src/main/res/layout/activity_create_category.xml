@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.shibkov.tasknotebook.app.CreateCategoryActivity">
+
+    <include
+            android:id="@+id/tool_bar"
+            layout="@layout/tool_bar"/>
+
+    <EditText
+            android:id="@+id/headerEdit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="11dp"
+            android:singleLine="true"
+            android:hint="@string/abc_edit_category_name"
+            />
+
+    <LinearLayout
+            android:id="@+id/selectIconLayout"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_margin="11dp"
+            android:layout_height="wrap_content">
+
+            <TextView
+                    android:layout_gravity="center"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="@string/abc_text_click_for_select_category_icon"/>
+
+            <ImageView
+                    android:src="@drawable/ic_events"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+    <EditText
+            android:id="@+id/descriptionEdit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="11dp"
+            android:background="@null"
+            android:hint="@string/abc_edit_category_description"/>
+
+</LinearLayout>
