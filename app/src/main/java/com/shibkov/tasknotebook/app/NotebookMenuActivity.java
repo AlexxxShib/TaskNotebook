@@ -1,5 +1,6 @@
 package com.shibkov.tasknotebook.app;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -23,6 +24,8 @@ import java.util.List;
  * Created by alexxxshib
  */
 public class NotebookMenuActivity extends ActionBarActivity {
+
+    private static final int REQUEST_CREATE_CATEGORY = 100;
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -71,7 +74,6 @@ public class NotebookMenuActivity extends ActionBarActivity {
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
             }
-
             @Override
             public void onDrawerClosed(View drawerView) {
                 super.onDrawerClosed(drawerView);
@@ -93,7 +95,6 @@ public class NotebookMenuActivity extends ActionBarActivity {
         super.onDestroy();
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -104,7 +105,8 @@ public class NotebookMenuActivity extends ActionBarActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_settings) {
+        if (id == R.id.menu_item_create_category) {
+            startActivityForResult(new Intent(this, CreateCategoryActivity.class), REQUEST_CREATE_CATEGORY);
             return true;
         }
 

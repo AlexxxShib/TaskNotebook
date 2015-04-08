@@ -10,12 +10,16 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:numColumns="auto_fit"
-            android:columnWidth="80dp"
+            android:columnWidth="60dp"
             android:stretchMode="columnWidth"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp"
+            android:layout_marginBottom="5dp"/>
 
     <Button
-            android:visibility="gone"
+            android:id="@+id/selectIconButton"
             android:layout_gravity="end"
             android:text="@string/abc_text_select"
             android:layout_margin="5dp"

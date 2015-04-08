@@ -11,6 +11,8 @@
     <string name="abc_open_drawer">Open Drawer</string>
     <string name="abc_close_drawer">Close Drawer</string>
 
+    <string name="abc_title_choice_category_icon">Выберите иконку</string>
+
     <!-- Categories -->
     <string name="abc_one_day_value">На день</string>
     <string name="abc_one_day_description">Задачи, которые необходимо выполнить за день!</string>
@@ -27,8 +29,10 @@
 
     <!--toast messages-->
     <string name="abc_need_header">Для создания задания необходим заголовок!</string>
-    <string name="abc_text_click_for_select_category_icon">Нажмите сюда для выбора иконки для этой категории...</string>
-    <string name="abc_text_select">Выбрать</string>
+    <string name="abc_text_click_for_select_category_icon">Нажмите сюда для выбора иконки для этой категории…</string>
 
+    <!--Actions-->
+    <string name="abc_text_select">Выбрать</string>
+    <string name="abc_action_create_category">Создать категорию</string>
 
 </resources>

@@ -18,7 +18,7 @@ public class IconsSelectAdapter extends ArrayAdapter<String> {
     public static final int NOT_SELECTED = -1;
 
     private final LayoutInflater layoutInflater;
-    private int selectedIcon = -1;
+    private int selectedIcon = 0;
 
     public IconsSelectAdapter(Context context, String[] objects) {
         super(context, R.layout.item_cell_icon, objects);
@@ -37,11 +37,14 @@ public class IconsSelectAdapter extends ArrayAdapter<String> {
         final ImageView iconView = (ImageView) convertView.findViewById(R.id.iconImage);
         if (position == selectedIcon) {
             iconView.setBackgroundResource(R.drawable.selected_icon_shape);
+        } else {
+            iconView.setBackgroundResource(0);
         }
         iconView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 selectedIcon = position;
+                notifyDataSetChanged();
             }
         });
         String imagePath = getItem(position);
