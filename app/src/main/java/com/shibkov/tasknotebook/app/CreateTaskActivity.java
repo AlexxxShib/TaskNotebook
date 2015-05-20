@@ -3,6 +3,7 @@ package com.shibkov.tasknotebook.app;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -10,7 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 
-public class CreateTaskActivity extends ActionBarActivity {
+public class CreateTaskActivity extends AppCompatActivity {
 
     public static final int RESULT_SUCCESS = 1;
     public static final int RESULT_FAILED  = -1;
