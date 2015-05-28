@@ -1,14 +1,13 @@
-package com.shibkov.tasknotebook.app;
+package com.shibkov.tasknotebook.app.activities;
 
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 
+import com.shibkov.tasknotebook.app.R;
 import com.shibkov.tasknotebook.app.fragments.ChoiceIconDialogFragment;
 import com.shibkov.tasknotebook.app.utils.Logger;
 

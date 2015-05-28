@@ -1,4 +1,4 @@
-package com.shibkov.tasknotebook.app;
+package com.shibkov.tasknotebook.app.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +11,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+
+import com.shibkov.tasknotebook.app.R;
 import com.shibkov.tasknotebook.app.database.DatabaseManager;
 import com.shibkov.tasknotebook.app.fragments.CategoryFragment;
 import com.shibkov.tasknotebook.app.managers.CategoryManager;
@@ -50,7 +52,6 @@ public class NotebookMenuActivity extends AppCompatActivity {
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true);
 
-        mCategoryManager.initDefaultCategories(this);
         mCategoryList = mCategoryManager.getAll();
 
         changeFragment(mCategoryList.get(0));

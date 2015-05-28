@@ -1,4 +1,4 @@
-package com.shibkov.tasknotebook.app;
+package com.shibkov.tasknotebook.app.activities;
 
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.shibkov.tasknotebook.app.R;
 import com.shibkov.tasknotebook.app.views.widgets.SlidingTabLayout;
 import com.shibkov.tasknotebook.app.views.adapters.ViewPagerAdapter;
 

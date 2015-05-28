@@ -28,40 +28,6 @@ public class CategoryManager implements IDataManager<Category> {
         }
     }
 
-    /**
-     * Init default values for categories
-     *
-     * @param context for init from strings of application
-     */
-    public void initDefaultCategories(Context context) {
-        Category oneDay = createCategory(0l, context.getString(R.string.abc_one_day_value),
-                context.getString(R.string.abc_one_day_description), 1000l * 3600l * 24l);
-        add(oneDay);
-
-        Category oneWeek = createCategory(1l, context.getString(R.string.abc_one_week_value),
-                context.getString(R.string.abc_one_week_description), 1000l * 3600l * 24l * 7l);
-        add(oneWeek);
-        Category oneMonth = createCategory(2l, context.getString(R.string.abc_one_month_value),
-                context.getString(R.string.abc_one_month_description), 1000l * 3600l * 24l * 30l);
-        add(oneMonth);
-
-        try {
-
-            GenericRawResults<String[]> result = mCategoryDao.queryRaw("select * from categories_table");
-            Logger.info("Print categories");
-            for (String[] row : result.getResults()) {
-                String str = "";
-                for (String col : row) {
-                    str += col + " ";
-                }
-                Logger.info(str);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-
     @Override
     public void add(Category object) {
         try {
@@ -111,13 +77,38 @@ public class CategoryManager implements IDataManager<Category> {
         return new ArrayList<Category>();
     }
 
-    public Category createCategory(Long id, String value, String description, Long timestamp) {
-        Category category = new Category();
-        category.setId(id);
-        category.setValue(value);
-        category.setDescription(description);
-        category.setInterval(timestamp);
+    /**
+     * Init default values for categories
+     *
+     * @param context for init from strings of application
+     */
+    public void initDefaultCategories(Context context) {
+        add(new Category(0l, context.getString(R.string.abc_one_day_value),
+                context.getString(R.string.abc_one_day_description), 1000l * 3600l * 24l, null));
 
-        return category;
+        add(new Category(1l, context.getString(R.string.abc_one_week_value),
+                context.getString(R.string.abc_one_week_description), 1000l * 3600l * 24l * 7l, null));
+
+        add(new Category(2l, context.getString(R.string.abc_one_month_value),
+                context.getString(R.string.abc_one_month_description), 1000l * 3600l * 24l * 30l, null));
+
+        debugPrintAll();
     }
+
+    public void debugPrintAll() {
+        try {
+            GenericRawResults<String[]> result = mCategoryDao.queryRaw("select * from categories_table");
+            Logger.info("Print categories");
+            for (String[] row : result.getResults()) {
+                String str = "";
+                for (String col : row) {
+                    str += col + " ";
+                }
+                Logger.info(str);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

@@ -1,4 +1,4 @@
-package com.shibkov.tasknotebook.app;
+package com.shibkov.tasknotebook.app.activities;
 
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
@@ -9,6 +9,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.shibkov.tasknotebook.app.R;
 
 
 public class CreateTaskActivity extends AppCompatActivity {

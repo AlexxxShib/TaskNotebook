@@ -5,7 +5,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.shibkov.tasknotebook.app.CreateCategoryActivity">
+        tools:context="com.shibkov.tasknotebook.app.activities.CreateCategoryActivity">
 
     <include
             android:id="@+id/tool_bar"

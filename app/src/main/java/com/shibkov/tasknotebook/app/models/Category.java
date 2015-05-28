@@ -31,6 +31,14 @@ public class Category implements Parcelable{
 
     public Category(){};
 
+    public Category(Long id, String value, String description, Long interval, String iconName) {
+        this.id = id;
+        this.value = value;
+        this.description = description;
+        this.interval = interval;
+        this.iconName = iconName;
+    }
+
     public Long getId() {
         return id;
     }

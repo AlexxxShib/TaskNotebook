@@ -29,6 +29,17 @@ public class TaskNote {
     @DatabaseField(columnName = BODY)
     private String body;
 
+    public TaskNote() {}
+
+    public TaskNote(long id, Date date, Category category, boolean isDone, String header, String body) {
+        this.id = id;
+        this.date = date;
+        this.category = category;
+        this.isDone = isDone;
+        this.header = header;
+        this.body = body;
+    }
+
     public long getId() {
         return id;
     }

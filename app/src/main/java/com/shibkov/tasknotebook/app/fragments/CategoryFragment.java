@@ -8,7 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import com.shibkov.tasknotebook.app.CreateTaskActivity;
+import com.shibkov.tasknotebook.app.activities.CreateTaskActivity;
 import com.shibkov.tasknotebook.app.R;
 import com.shibkov.tasknotebook.app.database.DatabaseManager;
 import com.shibkov.tasknotebook.app.managers.TaskNoteManager;

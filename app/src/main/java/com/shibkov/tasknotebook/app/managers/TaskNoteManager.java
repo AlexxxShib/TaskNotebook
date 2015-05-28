@@ -1,7 +1,10 @@
 package com.shibkov.tasknotebook.app.managers;
 
+import android.content.Context;
+
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.QueryBuilder;
+import com.shibkov.tasknotebook.app.R;
 import com.shibkov.tasknotebook.app.database.Contract;
 import com.shibkov.tasknotebook.app.database.DatabaseHelper;
 import com.shibkov.tasknotebook.app.models.Category;
@@ -10,6 +13,7 @@ import com.shibkov.tasknotebook.app.utils.Logger;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -25,6 +29,7 @@ public class TaskNoteManager implements IDataManager<TaskNote> {
     public TaskNoteManager(DatabaseHelper helper) {
         mTaskNoteDao = helper.getTaskNoteDao();
         mCategoryDao = helper.getCategoryDao();
+
         mCategoryManager = new CategoryManager(helper);
     }
 
@@ -83,5 +88,13 @@ public class TaskNoteManager implements IDataManager<TaskNote> {
             e.printStackTrace();
         }
         return new ArrayList<TaskNote>();
+    }
+
+    public void initTestNotes(Context context) {
+        Category category = mCategoryManager.findByValue(context.getString(R.string.abc_one_day_value));
+
+        add(new TaskNote(-1, new Date(), category, false, "Подстричся", "Пора привести себя в порядок"));
+        add(new TaskNote(-1, new Date(), category, false, "Убраться", "Убраться в комнате, а то заебало"));
+        add(new TaskNote(-1, new Date(), category, false, "Дочитать статью", "Ну там статья на хабре крутая, я помню какая"));
     }
 }
