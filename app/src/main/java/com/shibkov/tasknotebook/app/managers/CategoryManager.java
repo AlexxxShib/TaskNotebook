@@ -84,13 +84,13 @@ public class CategoryManager implements IDataManager<Category> {
      */
     public void initDefaultCategories(Context context) {
         add(new Category(0l, context.getString(R.string.abc_one_day_value),
-                context.getString(R.string.abc_one_day_description), 1000l * 3600l * 24l, null));
+                context.getString(R.string.abc_one_day_description), 1000l * 3600l * 24l, "ic_ring"));
 
         add(new Category(1l, context.getString(R.string.abc_one_week_value),
-                context.getString(R.string.abc_one_week_description), 1000l * 3600l * 24l * 7l, null));
+                context.getString(R.string.abc_one_week_description), 1000l * 3600l * 24l * 7l, "ic_time"));
 
         add(new Category(2l, context.getString(R.string.abc_one_month_value),
-                context.getString(R.string.abc_one_month_description), 1000l * 3600l * 24l * 30l, null));
+                context.getString(R.string.abc_one_month_description), 1000l * 3600l * 24l * 30l, "ic_calendar"));
 
         debugPrintAll();
     }

@@ -93,8 +93,8 @@ public class TaskNoteManager implements IDataManager<TaskNote> {
     public void initTestNotes(Context context) {
         Category category = mCategoryManager.findByValue(context.getString(R.string.abc_one_day_value));
 
-        add(new TaskNote(-1, new Date(), category, false, "Подстричся", "Пора привести себя в порядок"));
-        add(new TaskNote(-1, new Date(), category, false, "Убраться", "Убраться в комнате, а то заебало"));
-        add(new TaskNote(-1, new Date(), category, false, "Дочитать статью", "Ну там статья на хабре крутая, я помню какая"));
+        add(new TaskNote(-1, new Date(), category, false, "РџРѕРґСЃС‚СЂРёС‡СЊСЃСЏ", "РџРѕСЂР° РїСЂРёРІРµСЃС‚Рё СЃРµР±СЏ РІ РїРѕСЂСЏРґРѕРє"));
+        add(new TaskNote(-1, new Date(), category, false, "РЈР±СЂР°С‚СЊСЃСЏ", "РЈР±СЂР°С‚СЊСЃСЏ РІ РєРѕРјРЅР°С‚Рµ, Р° С‚Рѕ Р·Р°РµР±Р°Р»Рѕ"));
+        add(new TaskNote(-1, new Date(), category, false, "Р”РѕС‡РёС‚Р°С‚СЊ СЃС‚Р°С‚СЊСЋ", "РќСѓ С‚Р°Рј СЃС‚Р°С‚СЊСЏ РЅР° С…Р°Р±СЂРµ РєСЂСѓС‚Р°СЏ, СЏ РїРѕРјРЅСЋ РєР°РєР°СЏ"));
     }
 }

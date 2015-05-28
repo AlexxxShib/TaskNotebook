@@ -68,7 +68,6 @@ public class MainMenuAdapter extends RecyclerView.Adapter<MainMenuAdapter.ViewHo
         if (viewType == TYPE_ITEM) {
             View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_row_menu, parent, false);
             return new ViewHolder(v, viewType);
-
         }
         return null;
 
