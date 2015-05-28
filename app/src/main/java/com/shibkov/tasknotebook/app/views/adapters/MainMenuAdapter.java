@@ -8,7 +8,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.shibkov.tasknotebook.app.R;
+import com.shibkov.tasknotebook.app.TaskNotebookApplication;
 import com.shibkov.tasknotebook.app.models.Category;
+import com.shibkov.tasknotebook.app.utils.NotebookAssetManager;
 
 import java.util.List;
 
@@ -19,7 +21,7 @@ public class MainMenuAdapter extends RecyclerView.Adapter<MainMenuAdapter.ViewHo
 
 //    private static final int TYPE_HEADER = 0;
     private static final int TYPE_ITEM = 1;
-    private static final String DEFAULT_ICON = "ic_calendar";
+    private static final String DEFAULT_ICON = "ic_calendar.png";
 
     public interface MenuClickListener {
         void onItemClicked(Category category);
@@ -75,18 +77,19 @@ public class MainMenuAdapter extends RecyclerView.Adapter<MainMenuAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(MainMenuAdapter.ViewHolder holder, int position) {
-
         if (holder.holderId == 1) {
             Category category = mCategories.get(position);
-            String iconName = category.getIconName();
 
-            if (iconName == null) iconName = DEFAULT_ICON;
-            int imageResId = mContext.getResources().getIdentifier(iconName, "drawable", mContext.getPackageName());
+            String iconName = category.getIconName();
+            if (iconName == null) {
+                iconName = DEFAULT_ICON;
+            }
 
             holder.header.setText(category.getValue());
-            holder.imageView.setImageResource(imageResId);
             holder.description.setText(category.getDescription());
             holder.category = category;
+            holder.imageView.setImageDrawable(
+                    NotebookAssetManager.getDrawableBy(TaskNotebookApplication.getAppContext(), iconName));
         }
     }
 

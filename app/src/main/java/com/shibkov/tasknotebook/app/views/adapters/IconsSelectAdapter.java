@@ -8,7 +8,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import com.shibkov.tasknotebook.app.R;
 import com.shibkov.tasknotebook.app.utils.Logger;
+import com.shibkov.tasknotebook.app.utils.NotebookAssetManager;
 import com.squareup.picasso.Picasso;
+
+import java.util.List;
 
 /**
  * Created by alexxxshib
@@ -17,12 +20,10 @@ public class IconsSelectAdapter extends ArrayAdapter<String> {
 
     public static final int NOT_SELECTED = -1;
 
-    private final LayoutInflater layoutInflater;
     private int selectedIcon = 0;
 
-    public IconsSelectAdapter(Context context, String[] objects) {
+    public IconsSelectAdapter(Context context, List<String> objects) {
         super(context, R.layout.item_cell_icon, objects);
-        layoutInflater = LayoutInflater.from(context);
     }
 
     public int getSelectedIcon() {
@@ -32,7 +33,7 @@ public class IconsSelectAdapter extends ArrayAdapter<String> {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
-            convertView = layoutInflater.inflate(R.layout.item_cell_icon, null);
+            convertView = View.inflate(getContext(), R.layout.item_cell_icon, null);
         }
         final ImageView iconView = (ImageView) convertView.findViewById(R.id.iconImage);
         if (position == selectedIcon) {
@@ -49,7 +50,7 @@ public class IconsSelectAdapter extends ArrayAdapter<String> {
         });
         String imagePath = getItem(position);
         Picasso.with(getContext())
-                .load("file:///android_asset/icons/" + imagePath)
+                .load("file:///android_asset/" + NotebookAssetManager.ICONS_PATH + "/" + imagePath)
                 .centerCrop()
                 .resize(150, 150)
                 .into(iconView);
