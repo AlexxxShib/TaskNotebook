@@ -32,10 +32,12 @@ public class ChoiceIconDialogFragment extends DialogFragment implements View.OnC
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_choice_icon, container, false);
-
         icons = NotebookAssetManager.getIconsList(getActivity());
+
         adapter = new IconsSelectAdapter(getActivity(), icons);
-        ((GridView) view.findViewById(R.id.iconsGridView)).setAdapter(adapter);
+        adapter.setSelectedIcon(0);
+        GridView gridView = (GridView) view.findViewById(R.id.iconsGridView);
+        gridView.setAdapter(adapter);
 
         view.findViewById(R.id.selectIconButton).setOnClickListener(this);
         getDialog().setTitle(R.string.abc_title_choice_category_icon);

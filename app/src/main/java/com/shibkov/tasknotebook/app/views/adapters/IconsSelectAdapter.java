@@ -20,7 +20,7 @@ public class IconsSelectAdapter extends ArrayAdapter<String> {
 
     public static final int NOT_SELECTED = -1;
 
-    private int selectedIcon = 0;
+    private int selectedIcon = NOT_SELECTED;
 
     public IconsSelectAdapter(Context context, List<String> objects) {
         super(context, R.layout.item_cell_icon, objects);
@@ -30,17 +30,26 @@ public class IconsSelectAdapter extends ArrayAdapter<String> {
         return selectedIcon;
     }
 
+    public void setSelectedIcon(int pos) {
+        if (pos >= 0 || pos < getCount()) {
+            selectedIcon = pos;
+            notifyDataSetChanged();
+        }
+    }
+
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
             convertView = View.inflate(getContext(), R.layout.item_cell_icon, null);
         }
         final ImageView iconView = (ImageView) convertView.findViewById(R.id.iconImage);
+
         if (position == selectedIcon) {
             iconView.setBackgroundResource(R.drawable.selected_icon_shape);
         } else {
             iconView.setBackgroundResource(0);
         }
+
         iconView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -48,6 +57,7 @@ public class IconsSelectAdapter extends ArrayAdapter<String> {
                 notifyDataSetChanged();
             }
         });
+
         String imagePath = getItem(position);
         Picasso.with(getContext())
                 .load("file:///android_asset/" + NotebookAssetManager.ICONS_PATH + "/" + imagePath)

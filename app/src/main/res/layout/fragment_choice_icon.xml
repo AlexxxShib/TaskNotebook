@@ -1,29 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <GridView
-            android:id="@+id/iconsGridView"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:numColumns="auto_fit"
-            android:columnWidth="60dp"
-            android:stretchMode="columnWidth"
-            android:gravity="center"
-            android:layout_marginTop="15dp"
-            android:layout_marginLeft="3dp"
-            android:layout_marginRight="3dp"
-            android:layout_marginBottom="5dp"/>
+        android:id="@+id/iconsGridView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="3dp"
+        android:layout_marginRight="3dp"
+        android:layout_marginTop="15dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:numColumns="4"
+        android:stretchMode="columnWidth" />
 
     <Button
-            android:id="@+id/selectIconButton"
-            android:layout_gravity="end"
-            android:text="@string/abc_text_select"
-            android:layout_margin="5dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+        android:id="@+id/selectIconButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_margin="5dp"
+        android:text="@string/abc_text_select" />
 
 </LinearLayout>
