@@ -1,52 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context="com.shibkov.tasknotebook.app.activities.CreateCategoryActivity">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.shibkov.tasknotebook.app.activities.CreateCategoryActivity">
 
     <include
-            android:id="@+id/tool_bar"
-            layout="@layout/tool_bar"/>
+        android:id="@+id/tool_bar"
+        layout="@layout/tool_bar" />
 
     <EditText
-            android:id="@+id/headerEdit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="11dp"
-            android:singleLine="true"
-            android:hint="@string/abc_edit_category_name"
-            />
+        android:id="@+id/headerEdit"
+        style="@style/SettingsElement"
+        android:textSize="22sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/abc_edit_category_name"
+        android:singleLine="true" />
 
     <LinearLayout
-            android:id="@+id/selectIconLayout"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_margin="11dp"
-            android:layout_height="wrap_content">
+        android:id="@+id/selectIconLayout"
+        style="@style/SettingsElement"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-            <TextView
-                    android:layout_gravity="center"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:text="@string/abc_text_click_for_select_category_icon"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:textSize="22sp"
+            android:text="@string/abc_text_click_for_select_category_icon" />
 
-            <ImageView
-                    android:src="@drawable/ic_events"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_events" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/selectIntervalLayout"
+        style="@style/SettingsElement"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:textSize="22sp"
+            android:text="@string/abc_text_click_for_select_category_interval" />
 
     </LinearLayout>
 
     <EditText
-            android:id="@+id/descriptionEdit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="11dp"
-            android:background="@null"
-            android:hint="@string/abc_edit_category_description"/>
+        android:id="@+id/descriptionEdit"
+        style="@style/SettingsElement"
+        android:textSize="22sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/abc_edit_category_description"/>
 
 </LinearLayout>

@@ -4,12 +4,16 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.shibkov.tasknotebook.app.R;
+import com.shibkov.tasknotebook.app.database.DatabaseManager;
 import com.shibkov.tasknotebook.app.fragments.ChoiceIconDialogFragment;
-import com.shibkov.tasknotebook.app.utils.Logger;
+import com.shibkov.tasknotebook.app.managers.CategoryManager;
+import com.shibkov.tasknotebook.app.models.Category;
 
 /**
  * Created by alexxxshib
@@ -17,24 +21,23 @@ import com.shibkov.tasknotebook.app.utils.Logger;
 public class CreateCategoryActivity extends AppCompatActivity
         implements ChoiceIconDialogFragment.OnFinishChoiceIconDialog, View.OnClickListener {
 
+    private String iconPath = "ic_ring.png";
     private EditText headerEdit;
     private EditText descriptionEdit;
+
+    private CategoryManager categoryManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_category);
 
+        categoryManager = new CategoryManager(DatabaseManager.getHelper(this));
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
         getSupportActionBar().setTitle(R.string.abc_action_create_category);
 
         headerEdit = (EditText) findViewById(R.id.headerEdit);
@@ -50,13 +53,30 @@ public class CreateCategoryActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_create_task, menu);
-        return false;
+        getMenuInflater().inflate(R.menu.menu_create, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        switch (id) {
+            case R.id.menu_ready:
+                saveResult();
+                return true;
+
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
     public void selectedIcon(String iconPath) {
-        Logger.error(iconPath);
+        this.iconPath = iconPath;
     }
 
     @Override
@@ -68,5 +88,15 @@ public class CreateCategoryActivity extends AppCompatActivity
                 dialog.show(getFragmentManager(), "dialog");
                 break;
         }
+    }
+
+    private void saveResult() {
+        if (!validateDate()) {
+            return;
+        }
+    }
+
+    private boolean validateDate() {
+        return !headerEdit.getText().toString().trim().isEmpty();
     }
 }

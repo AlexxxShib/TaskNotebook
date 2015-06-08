@@ -2,8 +2,9 @@
       xmlns:app="http://schemas.android.com/apk/res-auto"
       xmlns:tools="http://schemas.android.com/tools"
       tools:context="com.shibkov.tasknotebook.app.activities.NotebookTabsActivity">
-    <item android:id="@+id/menu_item_create_category"
+
+    <!--<item android:id="@+id/menu_item_create_category"
           android:title="@string/abc_action_create_category"
           android:orderInCategory="100"
-          app:showAsAction="never"/>
+          app:showAsAction="never"/>-->
 </menu>

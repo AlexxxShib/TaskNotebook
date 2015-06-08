@@ -29,10 +29,12 @@
 
     <!--toast messages-->
     <string name="abc_need_header">Для создания задания необходим заголовок!</string>
-    <string name="abc_text_click_for_select_category_icon">Нажмите сюда для выбора иконки для этой категории…</string>
+    <string name="abc_text_click_for_select_category_icon">Выберите иконку</string>
+    <string name="abc_text_click_for_select_category_interval">Интервал для напоминаний</string>
 
     <!--Actions-->
     <string name="abc_text_select">Выбрать</string>
     <string name="abc_action_create_category">Создать категорию</string>
+    <string name="abc_action_ready">Готово</string>
 
 </resources>

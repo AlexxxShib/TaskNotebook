@@ -3,13 +3,8 @@
       xmlns:tools="http://schemas.android.com/tools"
       tools:context="com.shibkov.tasknotebook.app.activities.CreateTaskActivity">
 
-    <item android:id="@+id/save_task"
-          android:title="Готово"
+    <item android:id="@+id/menu_ready"
+          android:title="@string/abc_action_ready"
           android:icon="@drawable/done_d"
           app:showAsAction="always"/>
-
-    <item android:id="@+id/action_settings"
-          android:title="@string/action_settings"
-          android:orderInCategory="100"
-          app:showAsAction="never"/>
 </menu>

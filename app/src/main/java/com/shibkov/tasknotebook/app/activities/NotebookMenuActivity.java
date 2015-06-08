@@ -106,10 +106,10 @@ public class NotebookMenuActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.menu_item_create_category) {
+        /*if (id == R.id.menu_item_create_category) {
             startActivityForResult(new Intent(this, CreateCategoryActivity.class), REQUEST_CREATE_CATEGORY);
             return true;
-        }
+        }*/
 
         return super.onOptionsItemSelected(item);
     }
