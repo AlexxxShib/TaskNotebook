@@ -19,6 +19,7 @@ import com.shibkov.tasknotebook.app.models.TaskNote;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 
 public class CreateTaskActivity extends AppCompatActivity implements View.OnClickListener {
@@ -102,9 +103,9 @@ public class CreateTaskActivity extends AppCompatActivity implements View.OnClic
             dieTime.setTimeInMillis(System.currentTimeMillis());
             dieTime.add(Calendar.DAY_OF_YEAR, 1);
         }
-
-        timeButton.setText(new SimpleDateFormat(TIME_FORMAT).format(dieTime.getTime()));
-        dateButton.setText(new SimpleDateFormat(DATE_FORMAT).format(dieTime.getTime()));
+        Date date = dieTime.getTime();
+        timeButton.setText(new SimpleDateFormat(TIME_FORMAT).format(date));
+        dateButton.setText(new SimpleDateFormat(DATE_FORMAT).format(date));
     }
 
     private void showDateDialog() {

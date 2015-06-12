@@ -17,7 +17,7 @@ public class TaskNote {
     @DatabaseField(columnName = _ID, index = true, generatedId = true)
     private long id;
 
-    @DatabaseField(columnName = DATE, canBeNull = false, dataType = DataType.DATE)
+    @DatabaseField(columnName = DATE, canBeNull = false, dataType = DataType.DATE_LONG)
     private Date date = new Date();
     @DatabaseField(columnName = IS_DONE, dataType = DataType.BOOLEAN)
     private boolean isDone = false;

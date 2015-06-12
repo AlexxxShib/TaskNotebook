@@ -13,6 +13,7 @@ import com.shibkov.tasknotebook.app.utils.Logger;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -72,11 +73,15 @@ public class TaskNoteManager implements IDataManager<TaskNote> {
     }
 
     public List<TaskNote> getByCategory(Category category) {
+        Calendar endTimeCalendar = Calendar.getInstance();
+        endTimeCalendar.setTimeInMillis(System.currentTimeMillis() + category.getInterval());
+
+        Date startTime = new Date();
+        Date endTime = endTimeCalendar.getTime();
+
         QueryBuilder<TaskNote, Long> taskBuilder = mTaskNoteDao.queryBuilder();
-        QueryBuilder<Category, Long> categoryBuilder = mCategoryDao.queryBuilder();
         try {
-            categoryBuilder.where().eq(Contract.CCategory._ID, category.getId());
-            taskBuilder.join(categoryBuilder);
+            taskBuilder.where().between(Contract.CTaskNote.DATE, startTime, endTime);
             return mTaskNoteDao.query(taskBuilder.prepare());
         } catch (SQLException e) {
             e.printStackTrace();
@@ -85,8 +90,12 @@ public class TaskNoteManager implements IDataManager<TaskNote> {
     }
 
     public void initTestNotes(Context context) {
-        add(new TaskNote(-1, new Date(), false, "Подстричься", "Пора привести себя в порядок"));
-        add(new TaskNote(-1, new Date(), false, "Убраться", "Убраться в комнате, а то заебало"));
-        add(new TaskNote(-1, new Date(), false, "Дочитать статью", "Ну там статья на хабре крутая, я помню какая"));
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.HOUR, 12);
+        add(new TaskNote(-1, calendar.getTime(), false, "Подстричься", "Пора привести себя в порядок"));
+        calendar.add(Calendar.DAY_OF_YEAR, 3);
+        add(new TaskNote(-1, calendar.getTime(), false, "Убраться", "Убраться в комнате, а то заебало"));
+        calendar.add(Calendar.DAY_OF_YEAR, 10);
+        add(new TaskNote(-1, calendar.getTime(), false, "Дочитать статью", "Ну там статья на хабре крутая, я помню какая"));
     }
 }

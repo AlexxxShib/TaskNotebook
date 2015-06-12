@@ -21,13 +21,12 @@ import com.shibkov.tasknotebook.app.views.adapters.TaskNoteAdapter;
  */
 public class CategoryFragment extends Fragment {
 
-    private static final String CATEGORY_ARG_KEY = "category_arg_key";
+    private static final String ARG_CATEGORY = "ARG_CATEGORY";
     private static final int CREATE_ACTIVITY_CODE = 1;
 
     public static CategoryFragment newInstance(Category category) {
-
         Bundle arguments = new Bundle();
-        arguments.putParcelable(CATEGORY_ARG_KEY, category);
+        arguments.putParcelable(ARG_CATEGORY, category);
 
         CategoryFragment fragment = new CategoryFragment();
         fragment.setArguments(arguments);
@@ -47,8 +46,7 @@ public class CategoryFragment extends Fragment {
 
         mTaskNoteManager = new TaskNoteManager(DatabaseManager.getHelper(getActivity()));
 
-        mCategory = getArguments().getParcelable(CATEGORY_ARG_KEY);
-
+        mCategory = getArguments().getParcelable(ARG_CATEGORY);
         mLayoutManager = new LinearLayoutManager(getActivity());
 
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
@@ -70,33 +68,4 @@ public class CategoryFragment extends Fragment {
 
         return view;
     }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        /*if (requestCode == CreateTaskActivity.RESULT_FAILED || data == null) {
-            return;
-        }
-
-        switch (requestCode) {
-
-            case CREATE_ACTIVITY_CODE:
-                createTaskNote(
-                        data.getStringExtra(CreateTaskActivity.K_HEADER),
-                        data.getStringExtra(CreateTaskActivity.K_DESCRIPTION)
-                );
-                break;
-
-        }*/
-    }
-
-    /*private void createTaskNote(String header, String description) {
-        TaskNote taskNote = new TaskNote();
-        taskNote.setHeader(header);
-        taskNote.setBody(description);
-        taskNote.setCategory(mCategory);
-
-        taskNoteAdapter.addItem(taskNote);
-        mTaskNoteManager.add(taskNote);
-    }*/
 }

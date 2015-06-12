@@ -52,6 +52,7 @@ public class NotebookMenuActivity extends AppCompatActivity {
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true);
 
+        //init async
         mCategoryList = mCategoryManager.getAll();
 
         changeFragment(mCategoryList.get(0));
@@ -70,16 +71,7 @@ public class NotebookMenuActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         Drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerToggle = new ActionBarDrawerToggle(this, Drawer, toolbar, R.string.abc_open_drawer, R.string.abc_close_drawer){
-            @Override
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-            }
-            @Override
-            public void onDrawerClosed(View drawerView) {
-                super.onDrawerClosed(drawerView);
-            }
-        };
+        mDrawerToggle = new ActionBarDrawerToggle(this, Drawer, toolbar, R.string.abc_open_drawer, R.string.abc_close_drawer);
         Drawer.setDrawerListener(mDrawerToggle);
         mDrawerToggle.syncState();
     }
@@ -110,7 +102,6 @@ public class NotebookMenuActivity extends AppCompatActivity {
             startActivityForResult(new Intent(this, CreateCategoryActivity.class), REQUEST_CREATE_CATEGORY);
             return true;
         }*/
-
         return super.onOptionsItemSelected(item);
     }
 }
