@@ -74,7 +74,7 @@ public class CategoryFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        if (requestCode == CreateTaskActivity.RESULT_FAILED || data == null) {
+        /*if (requestCode == CreateTaskActivity.RESULT_FAILED || data == null) {
             return;
         }
 
@@ -87,10 +87,10 @@ public class CategoryFragment extends Fragment {
                 );
                 break;
 
-        }
+        }*/
     }
 
-    private void createTaskNote(String header, String description) {
+    /*private void createTaskNote(String header, String description) {
         TaskNote taskNote = new TaskNote();
         taskNote.setHeader(header);
         taskNote.setBody(description);
@@ -98,5 +98,5 @@ public class CategoryFragment extends Fragment {
 
         taskNoteAdapter.addItem(taskNote);
         mTaskNoteManager.add(taskNote);
-    }
+    }*/
 }

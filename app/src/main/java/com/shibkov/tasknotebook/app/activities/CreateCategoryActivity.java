@@ -7,19 +7,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.shibkov.tasknotebook.app.R;
 import com.shibkov.tasknotebook.app.database.DatabaseManager;
-import com.shibkov.tasknotebook.app.fragments.ChoiceIconDialogFragment;
+import com.shibkov.tasknotebook.app.fragments.dialogs.ChoiceIconDialog;
 import com.shibkov.tasknotebook.app.managers.CategoryManager;
-import com.shibkov.tasknotebook.app.models.Category;
 
 /**
  * Created by alexxxshib
  */
 public class CreateCategoryActivity extends AppCompatActivity
-        implements ChoiceIconDialogFragment.OnFinishChoiceIconDialog, View.OnClickListener {
+        implements ChoiceIconDialog.OnFinishChoiceIconDialog, View.OnClickListener {
 
     private String iconPath = "ic_ring.png";
     private EditText headerEdit;
@@ -84,7 +82,7 @@ public class CreateCategoryActivity extends AppCompatActivity
         switch (v.getId()) {
 
             case R.id.selectIconLayout:
-                ChoiceIconDialogFragment dialog = ChoiceIconDialogFragment.newInstance();
+                ChoiceIconDialog dialog = ChoiceIconDialog.newInstance();
                 dialog.show(getFragmentManager(), "dialog");
                 break;
         }

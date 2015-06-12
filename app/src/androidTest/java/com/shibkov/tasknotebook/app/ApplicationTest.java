@@ -9,16 +9,18 @@ import android.test.AndroidTestCase;
 import android.test.ApplicationTestCase;
 import android.test.suitebuilder.annotation.MediumTest;
 import android.util.Log;
+
+import com.shibkov.tasknotebook.app.activities.NotebookMenuActivity;
 import com.shibkov.tasknotebook.app.database.DatabaseHelper;
 import com.shibkov.tasknotebook.app.database.DatabaseManager;
 
 /**
  * <a href="http://d.android.com/tools/testing/testing_android.html">Testing Fundamentals</a>
  */
-public class ApplicationTest extends ActivityInstrumentationTestCase2<MainActivity> {
+public class ApplicationTest extends ActivityInstrumentationTestCase2<NotebookMenuActivity> {
 
     public ApplicationTest() {
-        super(MainActivity.class);
+        super(NotebookMenuActivity.class);
     }
 
     @MediumTest

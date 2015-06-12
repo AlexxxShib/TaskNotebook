@@ -10,7 +10,7 @@
             android:id="@+id/rowIcon"
             android:paddingLeft="10dp"
             android:layout_gravity="center"
-            android:src="@drawable/ic_launcher"/>
+            android:src="@drawable/icon_launcher"/>
 
     <LinearLayout
             android:paddingTop="4dp"

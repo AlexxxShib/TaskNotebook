@@ -19,8 +19,6 @@ public class TaskNote {
 
     @DatabaseField(columnName = DATE, canBeNull = false, dataType = DataType.DATE)
     private Date date = new Date();
-    @DatabaseField(columnName = CATEGORY, canBeNull = false, foreign = true)
-    private Category category;
     @DatabaseField(columnName = IS_DONE, dataType = DataType.BOOLEAN)
     private boolean isDone = false;
 
@@ -31,10 +29,9 @@ public class TaskNote {
 
     public TaskNote() {}
 
-    public TaskNote(long id, Date date, Category category, boolean isDone, String header, String body) {
+    public TaskNote(long id, Date date, boolean isDone, String header, String body) {
         this.id = id;
         this.date = date;
-        this.category = category;
         this.isDone = isDone;
         this.header = header;
         this.body = body;
@@ -54,14 +51,6 @@ public class TaskNote {
 
     public void setDate(Date date) {
         this.date = date;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
     }
 
     public boolean isDone() {

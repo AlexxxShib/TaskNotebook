@@ -36,12 +36,6 @@ public class TaskNoteManager implements IDataManager<TaskNote> {
     @Override
     public void add(TaskNote taskNote) {
         try {
-            Category category = mCategoryManager.findByValue(taskNote.getCategory().getValue());
-            if (category != null) {
-                taskNote.setCategory(category);
-            } else {
-                mCategoryManager.add(taskNote.getCategory());
-            }
             mTaskNoteDao.createOrUpdate(taskNote);
         } catch (SQLException e) {
             Logger.error(e.getMessage());
@@ -91,10 +85,8 @@ public class TaskNoteManager implements IDataManager<TaskNote> {
     }
 
     public void initTestNotes(Context context) {
-        Category category = mCategoryManager.findByValue(context.getString(R.string.abc_one_day_value));
-
-        add(new TaskNote(-1, new Date(), category, false, "Подстричься", "Пора привести себя в порядок"));
-        add(new TaskNote(-1, new Date(), category, false, "Убраться", "Убраться в комнате, а то заебало"));
-        add(new TaskNote(-1, new Date(), category, false, "Дочитать статью", "Ну там статья на хабре крутая, я помню какая"));
+        add(new TaskNote(-1, new Date(), false, "Подстричься", "Пора привести себя в порядок"));
+        add(new TaskNote(-1, new Date(), false, "Убраться", "Убраться в комнате, а то заебало"));
+        add(new TaskNote(-1, new Date(), false, "Дочитать статью", "Ну там статья на хабре крутая, я помню какая"));
     }
 }

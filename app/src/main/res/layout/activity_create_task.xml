@@ -17,6 +17,32 @@
             android:singleLine="true"
             android:hint="@string/abc_edit_header_hint"
             />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/date_button"
+            android:text="17/04/1992"
+            android:textSize="16sp"
+            android:layout_margin="4dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/time_button"
+            android:text="13:00"
+            android:textSize="16sp"
+            android:layout_margin="4dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
     <EditText
             android:id="@+id/descriptionEdit"
             android:layout_width="match_parent"

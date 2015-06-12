@@ -1,4 +1,4 @@
-package com.shibkov.tasknotebook.app.fragments;
+package com.shibkov.tasknotebook.app.fragments.dialogs;
 
 import android.app.DialogFragment;
 import android.os.Bundle;
@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * Created by alexxxshib
  */
-public class ChoiceIconDialogFragment extends DialogFragment implements View.OnClickListener {
+public class ChoiceIconDialog extends DialogFragment implements View.OnClickListener {
 
     public interface OnFinishChoiceIconDialog {
         void selectedIcon(String iconPath);
@@ -23,8 +23,8 @@ public class ChoiceIconDialogFragment extends DialogFragment implements View.OnC
 
     private List<String> icons;
 
-    public static ChoiceIconDialogFragment newInstance() {
-        return new ChoiceIconDialogFragment();
+    public static ChoiceIconDialog newInstance() {
+        return new ChoiceIconDialog();
     }
 
     private IconsSelectAdapter adapter;

@@ -37,4 +37,8 @@
     <string name="abc_action_create_category">Создать категорию</string>
     <string name="abc_action_ready">Готово</string>
 
+    <!--Dialogs-->
+    <string name="abc_dialog_title_choice_date">Выберите дату</string>
+    <string name="abc_dialog_title_choice_time">Выберите время</string>
+
 </resources>
