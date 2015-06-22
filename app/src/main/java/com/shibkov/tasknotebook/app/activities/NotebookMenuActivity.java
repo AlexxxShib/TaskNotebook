@@ -1,6 +1,5 @@
 package com.shibkov.tasknotebook.app.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -10,7 +9,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.shibkov.tasknotebook.app.R;
 import com.shibkov.tasknotebook.app.database.DatabaseManager;
@@ -32,7 +30,7 @@ public class NotebookMenuActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private DrawerLayout Drawer;
+    private DrawerLayout drawer;
 
     private ActionBarDrawerToggle mDrawerToggle;
 
@@ -62,7 +60,7 @@ public class NotebookMenuActivity extends AppCompatActivity {
             public void onItemClicked(Category category) {
                 Logger.info(String.format("Selected %s item", category.getValue()));
                 changeFragment(category);
-                Drawer.closeDrawers();
+                drawer.closeDrawers();
             }
         });
         mRecyclerView.setAdapter(mAdapter);
@@ -70,9 +68,9 @@ public class NotebookMenuActivity extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        Drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerToggle = new ActionBarDrawerToggle(this, Drawer, toolbar, R.string.abc_open_drawer, R.string.abc_close_drawer);
-        Drawer.setDrawerListener(mDrawerToggle);
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerToggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.abc_open_drawer, R.string.abc_close_drawer);
+        drawer.setDrawerListener(mDrawerToggle);
         mDrawerToggle.syncState();
     }
 
