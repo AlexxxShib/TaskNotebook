@@ -1,24 +1,17 @@
 package com.shibkov.tasknotebook.app.fragments;
 
-import android.animation.Animator;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.DecelerateInterpolator;
+import android.widget.ListView;
 
-import com.shibkov.tasknotebook.app.activities.CreateTaskActivity;
 import com.shibkov.tasknotebook.app.R;
 import com.shibkov.tasknotebook.app.database.DatabaseManager;
 import com.shibkov.tasknotebook.app.managers.TaskNoteManager;
 import com.shibkov.tasknotebook.app.models.Category;
-import com.shibkov.tasknotebook.app.models.TaskNote;
-import com.shibkov.tasknotebook.app.views.adapters.TaskNoteAdapter;
+import com.shibkov.tasknotebook.app.views.adapters.TaskNoteListAdapter;
 
 /**
  * Created by alexxxshib
@@ -26,7 +19,6 @@ import com.shibkov.tasknotebook.app.views.adapters.TaskNoteAdapter;
 public class CategoryFragment extends Fragment {
 
     private static final String ARG_CATEGORY = "ARG_CATEGORY";
-    private static final int CREATE_ACTIVITY_CODE = 1;
 
     public static CategoryFragment newInstance(Category category) {
         Bundle arguments = new Bundle();
@@ -39,10 +31,9 @@ public class CategoryFragment extends Fragment {
     }
 
     private TaskNoteManager mTaskNoteManager;
-    private RecyclerView.LayoutManager mLayoutManager;
     private Category mCategory;
 
-    private TaskNoteAdapter taskNoteAdapter;
+    private TaskNoteListAdapter taskNoteListAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -51,24 +42,10 @@ public class CategoryFragment extends Fragment {
         mTaskNoteManager = new TaskNoteManager(DatabaseManager.getHelper(getActivity()));
 
         mCategory = getArguments().getParcelable(ARG_CATEGORY);
-        mLayoutManager = new LinearLayoutManager(getActivity());
+        taskNoteListAdapter = new TaskNoteListAdapter(getActivity(), mTaskNoteManager.getByCategory(mCategory));
 
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
-        taskNoteAdapter = new TaskNoteAdapter(mTaskNoteManager.getByCategory(mCategory), new TaskNoteAdapter.TaskListListener() {
-            @Override
-            public void onItemClicked(TaskNote taskNote) {
-                //
-            }
-        });
-        recyclerView.setAdapter(taskNoteAdapter);
-        recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                Log.e("!!!!!!!!!!!!!!!!", "onLongClick");
-                return true;
-            }
-        });
+        ListView tasks = (ListView) view.findViewById(R.id.list_view);
+        tasks.setAdapter(taskNoteListAdapter);
         return view;
     }
 }
