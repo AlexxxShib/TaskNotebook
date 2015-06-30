@@ -1,5 +1,6 @@
 package com.shibkov.tasknotebook.app.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +10,8 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.animation.DecelerateInterpolator;
 
 import com.shibkov.tasknotebook.app.R;
 import com.shibkov.tasknotebook.app.database.DatabaseManager;
@@ -36,6 +39,8 @@ public class NotebookMenuActivity extends AppCompatActivity {
 
     private CategoryManager mCategoryManager;
     private List<Category> mCategoryList;
+
+    private View addButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,12 +77,26 @@ public class NotebookMenuActivity extends AppCompatActivity {
         mDrawerToggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.abc_open_drawer, R.string.abc_close_drawer);
         drawer.setDrawerListener(mDrawerToggle);
         mDrawerToggle.syncState();
+
+        addButton = findViewById(R.id.buttonAdd);
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(NotebookMenuActivity.this, CreateTaskActivity.class));
+            }
+        });
     }
 
-    private void changeFragment(Category category) {
-        getSupportActionBar().setTitle(category.getValue());
-        CategoryFragment fragment = CategoryFragment.newInstance(category);
-        getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commitAllowingStateLoss();
+    @Override
+    protected void onResume() {
+        super.onResume();
+        animateAddButton(true);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        animateAddButton(false);
     }
 
     @Override
@@ -101,5 +120,25 @@ public class NotebookMenuActivity extends AppCompatActivity {
             return true;
         }*/
         return super.onOptionsItemSelected(item);
+    }
+
+    private void changeFragment(Category category) {
+        getSupportActionBar().setTitle(category.getValue());
+        CategoryFragment fragment = CategoryFragment.newInstance(category);
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commitAllowingStateLoss();
+    }
+
+    private void animateAddButton(boolean isStart) {
+        if (isStart) {
+            addButton.animate()
+                    .setDuration(800)
+                    .alpha(1).scaleX(1).scaleY(1).rotation(360)
+                    .setInterpolator(new DecelerateInterpolator(1.5f));
+        } else {
+            addButton.setAlpha(0);
+            addButton.setScaleX(0);
+            addButton.setScaleY(0);
+            addButton.setRotation(0);
+        }
     }
 }

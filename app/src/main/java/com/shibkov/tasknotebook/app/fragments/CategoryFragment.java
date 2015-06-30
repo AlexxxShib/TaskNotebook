@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,7 +42,6 @@ public class CategoryFragment extends Fragment {
     private RecyclerView.LayoutManager mLayoutManager;
     private Category mCategory;
 
-    private View addButton;
     private TaskNoteAdapter taskNoteAdapter;
 
     @Override
@@ -62,40 +62,13 @@ public class CategoryFragment extends Fragment {
         });
         recyclerView.setAdapter(taskNoteAdapter);
         recyclerView.setLayoutManager(mLayoutManager);
-
-        addButton = view.findViewById(R.id.buttonAdd);
-        addButton.setOnClickListener(new View.OnClickListener() {
+        recyclerView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public void onClick(View v) {
-                startActivityForResult(new Intent(getActivity(), CreateTaskActivity.class), CREATE_ACTIVITY_CODE);
+            public boolean onLongClick(View v) {
+                Log.e("!!!!!!!!!!!!!!!!", "onLongClick");
+                return true;
             }
         });
         return view;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        animateAddButton(true);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        animateAddButton(false);
-    }
-
-    private void animateAddButton(boolean isStart) {
-        if (isStart) {
-            addButton.animate()
-                    .setDuration(1100)
-                    .alpha(1).scaleX(1).scaleY(1).rotation(360)
-                    .setInterpolator(new DecelerateInterpolator(1.5f));
-        } else {
-            addButton.setAlpha(0);
-            addButton.setScaleX(0);
-            addButton.setScaleY(0);
-            addButton.setRotation(0);
-        }
     }
 }

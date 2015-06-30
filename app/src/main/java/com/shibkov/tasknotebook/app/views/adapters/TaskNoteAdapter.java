@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * Created by alexxxshib
  */
-public class TaskNoteAdapter extends RecyclerSwipeAdapter<TaskNoteAdapter.ViewHolder> {
+public class TaskNoteAdapter extends RecyclerView.Adapter<TaskNoteAdapter.ViewHolder> {
 
     public interface TaskListListener {
         void onItemClicked(TaskNote taskNote);
@@ -38,24 +38,24 @@ public class TaskNoteAdapter extends RecyclerSwipeAdapter<TaskNoteAdapter.ViewHo
         public ViewHolder(View itemView) {
             super(itemView);
 
-            swipeLayout = (SwipeLayout) itemView.findViewById(R.id.swipe);
+//            swipeLayout = (SwipeLayout) itemView.findViewById(R.id.swipe);
             number = (TextView) itemView.findViewById(R.id.numberRow);
             header = (TextView) itemView.findViewById(R.id.headerRow);
             body   = (TextView) itemView.findViewById(R.id.descriptionRow);
-            buttonDelete = (Button) itemView.findViewById(R.id.delete);
+//            buttonDelete = (Button) itemView.findViewById(R.id.delete);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mTaskListListener.onItemClicked(taskNote);
-                }
-            });
+//            itemView.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    mTaskListListener.onItemClicked(taskNote);
+//                }
+//            });
         }
     }
 
     private final List<TaskNote> mTaskNoteList;
     private final TaskListListener mTaskListListener;
-    protected SwipeItemRecyclerMangerImpl mItemManger = new SwipeItemRecyclerMangerImpl(this);
+//    protected SwipeItemRecyclerMangerImpl mItemManger = new SwipeItemRecyclerMangerImpl(this);
 
     public TaskNoteAdapter(List<TaskNote> taskNotes, TaskListListener listener) {
         mTaskNoteList = taskNotes;
@@ -76,7 +76,7 @@ public class TaskNoteAdapter extends RecyclerSwipeAdapter<TaskNoteAdapter.ViewHo
     public void onBindViewHolder(final TaskNoteAdapter.ViewHolder viewHolder, final int position) {
         TaskNote taskNote = mTaskNoteList.get(position);
 
-        viewHolder.swipeLayout.setShowMode(SwipeLayout.ShowMode.PullOut);
+        /*viewHolder.swipeLayout.setShowMode(SwipeLayout.ShowMode.PullOut);
         viewHolder.swipeLayout.addSwipeListener(new SimpleSwipeListener() {
             @Override
             public void onOpen(SwipeLayout layout) {
@@ -99,12 +99,13 @@ public class TaskNoteAdapter extends RecyclerSwipeAdapter<TaskNoteAdapter.ViewHo
                 mItemManger.closeAllItems();
                 Toast.makeText(view.getContext(), "Deleted " + viewHolder.number.getText().toString() + "!", Toast.LENGTH_SHORT).show();
             }
-        });
+        });*/
         viewHolder.number.setText(String.format("%d.", position + 1));
         viewHolder.header.setText(taskNote.getHeader());
         viewHolder.body.setText(taskNote.getBody());
         viewHolder.taskNote = taskNote;
-        mItemManger.bindView(viewHolder.itemView, position);
+
+//        mItemManger.bindView(viewHolder.itemView, position);
     }
 
     @Override
@@ -112,8 +113,8 @@ public class TaskNoteAdapter extends RecyclerSwipeAdapter<TaskNoteAdapter.ViewHo
         return mTaskNoteList.size();
     }
 
-    @Override
-    public int getSwipeLayoutResourceId(int i) {
-        return R.id.swipe;
-    }
+//    @Override
+//    public int getSwipeLayoutResourceId(int i) {
+//        return R.id.swipe;
+//    }
 }
