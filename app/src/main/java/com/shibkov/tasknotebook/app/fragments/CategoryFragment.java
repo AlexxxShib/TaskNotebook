@@ -11,7 +11,10 @@ import com.shibkov.tasknotebook.app.R;
 import com.shibkov.tasknotebook.app.database.DatabaseManager;
 import com.shibkov.tasknotebook.app.managers.TaskNoteManager;
 import com.shibkov.tasknotebook.app.models.Category;
+import com.shibkov.tasknotebook.app.models.TaskNote;
 import com.shibkov.tasknotebook.app.views.adapters.TaskNoteListAdapter;
+
+import java.util.ArrayList;
 
 /**
  * Created by alexxxshib
@@ -42,10 +45,22 @@ public class CategoryFragment extends Fragment {
         mTaskNoteManager = new TaskNoteManager(DatabaseManager.getHelper(getActivity()));
 
         mCategory = getArguments().getParcelable(ARG_CATEGORY);
-        taskNoteListAdapter = new TaskNoteListAdapter(getActivity(), mTaskNoteManager.getByCategory(mCategory));
+        taskNoteListAdapter = new TaskNoteListAdapter(getActivity(), new ArrayList<TaskNote>());
 
         ListView tasks = (ListView) view.findViewById(R.id.list_view);
         tasks.setAdapter(taskNoteListAdapter);
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateList();
+    }
+
+    //todo make async
+    private void updateList() {
+        taskNoteListAdapter.clear();
+        taskNoteListAdapter.addAll(mTaskNoteManager.getByCategory(mCategory));
     }
 }

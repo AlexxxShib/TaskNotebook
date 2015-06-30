@@ -10,7 +10,7 @@
         android:layout_width="55dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:gravity="start"
+        android:gravity="start|center_vertical"
         android:paddingLeft="8dp"
         android:text="11."
         android:textAppearance="?android:attr/textAppearanceMedium"
