@@ -1,7 +1,6 @@
 package com.shibkov.tasknotebook.app.views.adapters;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +17,15 @@ import java.util.List;
  */
 public class TaskNoteListAdapter extends ArrayAdapter<TaskNote> {
 
+    private int expandablePos = -1;
+
     public TaskNoteListAdapter(Context context, List<TaskNote> objects) {
         super(context, R.layout.item_row_task, objects);
+    }
+
+    public void action(int pos) {
+        expandablePos = pos;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -33,7 +39,7 @@ public class TaskNoteListAdapter extends ArrayAdapter<TaskNote> {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        holder.setModel(position);
+        holder.showByPos(position);
         return convertView;
     }
 
@@ -42,14 +48,22 @@ public class TaskNoteListAdapter extends ArrayAdapter<TaskNote> {
         TextView header;
         TextView body;
 
+        View buttonsRoot;
+        View editBtn;
+        View removeBtn;
+
         public ViewHolder(View itemView) {
             number = (TextView) itemView.findViewById(R.id.numberRow);
             header = (TextView) itemView.findViewById(R.id.headerRow);
             body   = (TextView) itemView.findViewById(R.id.descriptionRow);
+
+            buttonsRoot = itemView.findViewById(R.id.root_buttons);
+            editBtn     = itemView.findViewById(R.id.edit);
+            removeBtn   = itemView.findViewById(R.id.remove);
         }
 
-        public void setModel(int position) {
-            TaskNote note = getItem(position);
+        public void showByPos(int position) {
+            final TaskNote note = getItem(position);
             number.setText(String.format("%d.", position + 1));
             header.setText(note.getHeader());
 
@@ -59,6 +73,11 @@ public class TaskNoteListAdapter extends ArrayAdapter<TaskNote> {
             } else {
                 body.setText(bodyStr);
             }
+
+            boolean isExpandable = position == expandablePos;
+
+            body.setSingleLine(!isExpandable);
+            buttonsRoot.setVisibility(isExpandable ? View.VISIBLE : View.GONE);
         }
     }
 }

@@ -36,6 +36,8 @@
     <string name="abc_text_select">Выбрать</string>
     <string name="abc_action_create_category">Создать категорию</string>
     <string name="abc_action_ready">Готово</string>
+    <string name="abc_action_edit">Редактировать</string>
+    <string name="abc_action_remove">Удалить</string>
 
     <!--Dialogs-->
     <string name="abc_dialog_title_choice_date">Выберите дату</string>

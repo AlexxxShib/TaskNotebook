@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.shibkov.tasknotebook.app.R;
@@ -47,8 +48,14 @@ public class CategoryFragment extends Fragment {
         mCategory = getArguments().getParcelable(ARG_CATEGORY);
         taskNoteListAdapter = new TaskNoteListAdapter(getActivity(), new ArrayList<TaskNote>());
 
-        ListView tasks = (ListView) view.findViewById(R.id.list_view);
-        tasks.setAdapter(taskNoteListAdapter);
+        ListView tasksListView = (ListView) view.findViewById(R.id.list_view);
+        tasksListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                taskNoteListAdapter.action(position);
+            }
+        });
+        tasksListView.setAdapter(taskNoteListAdapter);
         return view;
     }
 
