@@ -1,5 +1,6 @@
 package com.shibkov.tasknotebook.app.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -24,6 +25,8 @@ import java.util.Date;
 
 public class CreateTaskActivity extends AppCompatActivity implements View.OnClickListener {
 
+    public static final String KEY_TASK_NOTE_ID = "KEY_TASK_NOTE_ID";
+
     private static final String DATE_FORMAT = "dd/MM/yyyy";
     private static final String TIME_FORMAT = "HH:mm";
 
@@ -36,6 +39,8 @@ public class CreateTaskActivity extends AppCompatActivity implements View.OnClic
     private TaskNoteManager taskNoteManager;
 
     private Calendar dieTime;
+
+    private TaskNote taskNote;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +63,7 @@ public class CreateTaskActivity extends AppCompatActivity implements View.OnClic
         timeButton.setOnClickListener(this);
 
         taskNoteManager = new TaskNoteManager(DatabaseManager.getHelper(this));
-        initTimeValues();
+        initFields();
     }
 
     @Override
@@ -97,12 +102,27 @@ public class CreateTaskActivity extends AppCompatActivity implements View.OnClic
         }
     }
 
-    private void initTimeValues() {
-        if (dieTime == null) {
-            dieTime = Calendar.getInstance();
-            dieTime.setTimeInMillis(System.currentTimeMillis());
-            dieTime.add(Calendar.DAY_OF_YEAR, 1);
+    private void initFields() {
+        Intent intent = getIntent();
+        if (intent.hasExtra(KEY_TASK_NOTE_ID) && taskNote == null) {
+            taskNote = taskNoteManager.findById(intent.getLongExtra(KEY_TASK_NOTE_ID, -1));
+
+            if (taskNote == null) {
+                taskNote = new TaskNote();
+                if (dieTime == null) {
+                    dieTime = Calendar.getInstance();
+                    dieTime.setTimeInMillis(System.currentTimeMillis());
+                    dieTime.add(Calendar.DAY_OF_YEAR, 1);
+                }
+            } else {
+                headerEdit.setText(taskNote.getHeader());
+                descriptionEdit.setText(taskNote.getBody());
+
+                dieTime = Calendar.getInstance();
+                dieTime.setTime(taskNote.getDate());
+            }
         }
+
         Date date = dieTime.getTime();
         timeButton.setText(new SimpleDateFormat(TIME_FORMAT).format(date));
         dateButton.setText(new SimpleDateFormat(DATE_FORMAT).format(date));
@@ -127,7 +147,7 @@ public class CreateTaskActivity extends AppCompatActivity implements View.OnClic
                         dieTime.set(Calendar.MONTH, c.get(Calendar.MONTH));
                         dieTime.set(Calendar.DAY_OF_MONTH, c.get(Calendar.DAY_OF_MONTH));
 
-                        initTimeValues();
+                        initFields();
                     }
                 }).show(getFragmentManager(), "choice_date");
     }
@@ -147,7 +167,7 @@ public class CreateTaskActivity extends AppCompatActivity implements View.OnClic
                         dieTime.set(Calendar.HOUR, c.get(Calendar.HOUR));
                         dieTime.set(Calendar.MINUTE, c.get(Calendar.MINUTE));
 
-                        initTimeValues();
+                        initFields();
                     }
                 }).show(getFragmentManager(), "choice_time");
     }
@@ -166,9 +186,11 @@ public class CreateTaskActivity extends AppCompatActivity implements View.OnClic
         }
         String description = descriptionEdit.getText().toString();
 
-        TaskNote taskNote = new TaskNote(-1, dieTime.getTime(), false, header, description);
-        taskNoteManager.add(taskNote);
+        taskNote.setDate(dieTime.getTime());
+        taskNote.setHeader(header);
+        taskNote.setBody(description);
 
+        taskNoteManager.add(taskNote);
         onBackPressed();
     }
 }

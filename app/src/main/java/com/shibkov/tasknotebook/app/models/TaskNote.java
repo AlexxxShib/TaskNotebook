@@ -27,7 +27,9 @@ public class TaskNote {
     @DatabaseField(columnName = BODY)
     private String body;
 
-    public TaskNote() {}
+    public TaskNote() {
+        this.id = -1;
+    }
 
     public TaskNote(long id, Date date, boolean isDone, String header, String body) {
         this.id = id;

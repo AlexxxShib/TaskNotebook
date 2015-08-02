@@ -17,10 +17,20 @@ import java.util.List;
  */
 public class TaskNoteListAdapter extends ArrayAdapter<TaskNote> {
 
+    public interface OnActionClickListener {
+        void removeItem(long id);
+        void editItem(long id);
+    }
+
     private int expandablePos = -1;
+    private OnActionClickListener listener;
 
     public TaskNoteListAdapter(Context context, List<TaskNote> objects) {
         super(context, R.layout.item_row_task, objects);
+    }
+
+    public void setActionListener(OnActionClickListener listener) {
+        this.listener = listener;
     }
 
     public void action(int pos) {
@@ -78,6 +88,24 @@ public class TaskNoteListAdapter extends ArrayAdapter<TaskNote> {
 
             body.setSingleLine(!isExpandable);
             buttonsRoot.setVisibility(isExpandable ? View.VISIBLE : View.GONE);
+
+            if (isExpandable && listener != null) {
+                removeBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        listener.removeItem(note.getId());
+                    }
+                });
+                editBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        listener.editItem(note.getId());
+                    }
+                });
+            } else {
+                removeBtn.setOnClickListener(null);
+                editBtn.setOnClickListener(null);
+            }
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.shibkov.tasknotebook.app.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.shibkov.tasknotebook.app.R;
+import com.shibkov.tasknotebook.app.activities.CreateTaskActivity;
 import com.shibkov.tasknotebook.app.database.DatabaseManager;
 import com.shibkov.tasknotebook.app.managers.TaskNoteManager;
 import com.shibkov.tasknotebook.app.models.Category;
@@ -47,6 +49,17 @@ public class CategoryFragment extends Fragment {
 
         mCategory = getArguments().getParcelable(ARG_CATEGORY);
         taskNoteListAdapter = new TaskNoteListAdapter(getActivity(), new ArrayList<TaskNote>());
+        taskNoteListAdapter.setActionListener(new TaskNoteListAdapter.OnActionClickListener() {
+            @Override
+            public void removeItem(long id) {
+
+            }
+            @Override
+            public void editItem(long id) {
+                startActivity(new Intent(getActivity(), CreateTaskActivity.class)
+                        .putExtra(CreateTaskActivity.KEY_TASK_NOTE_ID, id));
+            }
+        });
 
         ListView tasksListView = (ListView) view.findViewById(R.id.list_view);
         tasksListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
