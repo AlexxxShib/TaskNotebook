@@ -20,6 +20,8 @@
     <string name="abc_one_week_description">Задачи целую неделю!</string>
     <string name="abc_one_month_value">На месяц</string>
     <string name="abc_one_month_description">Задачи, которые необходимо выполнить в течении месяца!</string>
+    <string name="abc_archive">Архив</string>
+    <string name="abc_archive_description">Невыполненные задачи…</string>
 
     <!--interface suggests-->
     <string name="abc_edit_header_hint">Введите заголовок задачи…</string>
