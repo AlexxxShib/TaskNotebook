@@ -8,23 +8,27 @@ import android.provider.BaseColumns;
 public class Contract {
 
     public static class CTaskNote implements BaseColumns {
-
         public static final String TABLE_NAME  = "task_notes_table";
 
         public static final String DATE        = "date";
-        public static final String CATEGORY    = "category";
         public static final String IS_DONE     = "is_done";
         public static final String HEADER      = "header";
         public static final String BODY        = "body";
     }
 
     public static class CCategory implements BaseColumns {
-
         public static final String TABLE_NAME  = "categories_table";
 
         public static final String VALUE       = "value";
         public static final String DESCRIPTION = "description";
         public static final String INTERVAL = "timestamp";
         public static final String ICON_NAME = "icon_name";
+    }
+
+    public static class CNotify implements BaseColumns {
+        public static final String TABLE_NAME  = "notifies_table";
+
+        public static final String TASK_NOTE = "task_note";
+        public static final String NOTIFY_TIME = "notify_time";
     }
 }

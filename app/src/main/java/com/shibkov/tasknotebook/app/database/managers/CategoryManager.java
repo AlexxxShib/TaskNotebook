@@ -1,4 +1,4 @@
-package com.shibkov.tasknotebook.app.managers;
+package com.shibkov.tasknotebook.app.database.managers;
 
 import android.content.Context;
 import com.j256.ormlite.dao.Dao;

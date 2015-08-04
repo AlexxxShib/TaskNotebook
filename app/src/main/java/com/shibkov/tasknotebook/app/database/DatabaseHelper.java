@@ -7,8 +7,8 @@ import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import com.shibkov.tasknotebook.app.TaskNotebookApplication;
-import com.shibkov.tasknotebook.app.managers.CategoryManager;
-import com.shibkov.tasknotebook.app.managers.TaskNoteManager;
+import com.shibkov.tasknotebook.app.database.managers.CategoryManager;
+import com.shibkov.tasknotebook.app.database.managers.TaskNoteManager;
 import com.shibkov.tasknotebook.app.models.Category;
 import com.shibkov.tasknotebook.app.models.TaskNote;
 import com.shibkov.tasknotebook.app.utils.Logger;
@@ -20,7 +20,7 @@ import java.sql.SQLException;
  */
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
-    public static final int DATABASE_VERSION = 7;
+    public static final int DATABASE_VERSION = 8;
     public static final String DATABASE_NAME = "TaskNotebookDatabaseORM.db";
 
     private static class DaoHolder {

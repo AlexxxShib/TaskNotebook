@@ -11,7 +11,7 @@ import android.widget.EditText;
 import com.shibkov.tasknotebook.app.R;
 import com.shibkov.tasknotebook.app.database.DatabaseManager;
 import com.shibkov.tasknotebook.app.fragments.dialogs.ChoiceIconDialog;
-import com.shibkov.tasknotebook.app.managers.CategoryManager;
+import com.shibkov.tasknotebook.app.database.managers.CategoryManager;
 
 /**
  * Created by alexxxshib

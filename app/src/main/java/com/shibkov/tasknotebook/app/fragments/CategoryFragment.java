@@ -12,7 +12,7 @@ import android.widget.ListView;
 import com.shibkov.tasknotebook.app.R;
 import com.shibkov.tasknotebook.app.activities.CreateTaskActivity;
 import com.shibkov.tasknotebook.app.database.DatabaseManager;
-import com.shibkov.tasknotebook.app.managers.TaskNoteManager;
+import com.shibkov.tasknotebook.app.database.managers.TaskNoteManager;
 import com.shibkov.tasknotebook.app.models.Category;
 import com.shibkov.tasknotebook.app.models.TaskNote;
 import com.shibkov.tasknotebook.app.views.adapters.TaskNoteListAdapter;

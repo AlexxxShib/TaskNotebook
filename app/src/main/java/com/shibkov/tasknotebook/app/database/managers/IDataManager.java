@@ -1,6 +1,5 @@
-package com.shibkov.tasknotebook.app.managers;
+package com.shibkov.tasknotebook.app.database.managers;
 
-import java.sql.SQLException;
 import java.util.List;
 
 /**
