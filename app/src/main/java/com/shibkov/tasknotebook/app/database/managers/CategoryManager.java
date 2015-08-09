@@ -19,6 +19,9 @@ import java.util.List;
  */
 public class CategoryManager implements IDataManager<Category> {
 
+    public static final long CATEGORY_ARCH = 3l;
+    public static final long CATEGORY_DONE = 4l;
+
     private final Dao<Category, Long> mCategoryDao;
 
     public CategoryManager(DatabaseHelper helper) {
@@ -89,8 +92,10 @@ public class CategoryManager implements IDataManager<Category> {
                 context.getString(R.string.abc_one_week_description), 1000l * 3600l * 24l * 7l, "ic_time.png"));
         add(new Category(2l, context.getString(R.string.abc_one_month_value),
                 context.getString(R.string.abc_one_month_description), 1000l * 3600l * 24l * 30l, "ic_events.png"));
-        add(new Category(3l, context.getString(R.string.abc_archive),
+        add(new Category(CATEGORY_ARCH, context.getString(R.string.abc_archive),
                 context.getString(R.string.abc_archive_description), 0l, "arch.png"));
+        add(new Category(CATEGORY_DONE, context.getString(R.string.abc_done),
+                context.getString(R.string.abc_done_description), 0l, "done.png"));
 
         debugPrintAll();
     }

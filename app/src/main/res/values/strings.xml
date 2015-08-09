@@ -22,6 +22,8 @@
     <string name="abc_one_month_description">Задачи, которые необходимо выполнить в течении месяца!</string>
     <string name="abc_archive">Архив</string>
     <string name="abc_archive_description">Невыполненные задачи…</string>
+    <string name="abc_done">Выполненные</string>
+    <string name="abc_done_description">Выполненнные задачи</string>
 
     <!--interface suggests-->
     <string name="abc_edit_header_hint">Введите заголовок задачи…</string>

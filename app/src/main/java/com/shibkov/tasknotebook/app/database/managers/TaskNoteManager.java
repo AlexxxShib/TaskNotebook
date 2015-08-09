@@ -87,17 +87,17 @@ public class TaskNoteManager implements IDataManager<TaskNote> {
         Calendar endTimeCalendar = Calendar.getInstance();
         endTimeCalendar.setTimeInMillis(System.currentTimeMillis() + category.getInterval());
 
-        boolean isArchive = category.getInterval().equals(0l);
-
         Date startTime = new Date();
         Date endTime = endTimeCalendar.getTime();
 
         QueryBuilder<TaskNote, Long> taskBuilder = mTaskNoteDao.queryBuilder();
         try {
-            if (!isArchive) {
-                taskBuilder.where().between(Contract.CTaskNote.DATE, startTime, endTime);
-            } else {
+            if (category.getId().equals(CategoryManager.CATEGORY_ARCH)) {
                 taskBuilder.where().le(Contract.CTaskNote.DATE, startTime);
+            } else if (category.getId().equals(CategoryManager.CATEGORY_DONE)) {
+                taskBuilder.where().eq(Contract.CTaskNote.IS_DONE, true);
+            } else {
+                taskBuilder.where().between(Contract.CTaskNote.DATE, startTime, endTime);
             }
             return mTaskNoteDao.query(taskBuilder.prepare());
         } catch (SQLException e) {
