@@ -109,11 +109,6 @@ public class CreateTaskActivity extends AppCompatActivity implements View.OnClic
 
             if (taskNote == null) {
                 taskNote = new TaskNote();
-                if (dieTime == null) {
-                    dieTime = Calendar.getInstance();
-                    dieTime.setTimeInMillis(System.currentTimeMillis());
-                    dieTime.add(Calendar.DAY_OF_YEAR, 1);
-                }
             } else {
                 headerEdit.setText(taskNote.getHeader());
                 descriptionEdit.setText(taskNote.getBody());
@@ -122,7 +117,11 @@ public class CreateTaskActivity extends AppCompatActivity implements View.OnClic
                 dieTime.setTime(taskNote.getDate());
             }
         }
-
+        if (dieTime == null) {
+            dieTime = Calendar.getInstance();
+            dieTime.setTimeInMillis(System.currentTimeMillis());
+            dieTime.add(Calendar.DAY_OF_YEAR, 1);
+        }
         Date date = dieTime.getTime();
         timeButton.setText(new SimpleDateFormat(TIME_FORMAT).format(date));
         dateButton.setText(new SimpleDateFormat(DATE_FORMAT).format(date));
