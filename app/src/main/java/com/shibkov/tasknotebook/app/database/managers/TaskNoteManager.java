@@ -3,6 +3,7 @@ package com.shibkov.tasknotebook.app.database.managers;
 import android.content.Context;
 
 import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.stmt.PreparedUpdate;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.shibkov.tasknotebook.app.database.Contract;
 import com.shibkov.tasknotebook.app.database.DatabaseHelper;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 /**
  * Created by alexxxshib
@@ -60,9 +62,25 @@ public class TaskNoteManager implements IDataManager<TaskNote> {
         try {
             return mTaskNoteDao.queryForAll();
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger.error(e.getMessage());
         }
         return new ArrayList<TaskNote>();
+    }
+
+    public void batchUpdate(final List<TaskNote> taskNotes) {
+        try {
+            mTaskNoteDao.callBatchTasks(new Callable<Void>() {
+                @Override
+                public Void call() throws Exception {
+                    for (TaskNote taskNote : taskNotes) {
+                        mTaskNoteDao.update(taskNote);
+                    }
+                    return null;
+                }
+            });
+        } catch (Exception e) {
+            Logger.error(e.getMessage());
+        }
     }
 
     public List<TaskNote> getByCategory(Category category) {

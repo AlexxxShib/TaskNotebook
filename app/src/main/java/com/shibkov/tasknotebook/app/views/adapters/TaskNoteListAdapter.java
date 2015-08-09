@@ -98,16 +98,6 @@ public class TaskNoteListAdapter extends ArrayAdapter<TaskNote> {
                     note.setDone(!note.isDone());
                 }
             });
-            /*done.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    listener.doneItem(note.getId());
-                    note.setDone(!note.isDone());
-                    int resId = note.isDone() ?
-                            R.drawable.circle_checkbox_selected : R.drawable.circle_checkbox_unselect;
-                    done.setBackgroundResource(resId);
-                }
-            });*/
 
             boolean isExpandable = position == expandablePos;
 

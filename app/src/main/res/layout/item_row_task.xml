@@ -79,8 +79,8 @@
         android:id="@+id/done"
         android:button="@drawable/circle_checkbox"
         android:focusable="false"
-        android:layout_gravity="center"
-        android:layout_margin="8dp"
+        android:layout_gravity="top"
+        android:layout_marginTop="12dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 

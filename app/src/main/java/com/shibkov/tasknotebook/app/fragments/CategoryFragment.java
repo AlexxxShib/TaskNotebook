@@ -18,6 +18,7 @@ import com.shibkov.tasknotebook.app.models.TaskNote;
 import com.shibkov.tasknotebook.app.views.adapters.TaskNoteListAdapter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by alexxxshib
@@ -40,6 +41,7 @@ public class CategoryFragment extends Fragment {
     private Category mCategory;
 
     private TaskNoteListAdapter taskNoteListAdapter;
+    private List<TaskNote> taskNoteList = new ArrayList<TaskNote>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -48,7 +50,7 @@ public class CategoryFragment extends Fragment {
         mTaskNoteManager = new TaskNoteManager(DatabaseManager.getHelper(getActivity()));
 
         mCategory = getArguments().getParcelable(ARG_CATEGORY);
-        taskNoteListAdapter = new TaskNoteListAdapter(getActivity(), new ArrayList<TaskNote>());
+        taskNoteListAdapter = new TaskNoteListAdapter(getActivity(), taskNoteList);
         taskNoteListAdapter.setActionListener(new TaskNoteListAdapter.OnActionClickListener() {
             @Override
             public void doneItem(long id) {
@@ -82,9 +84,16 @@ public class CategoryFragment extends Fragment {
         updateList();
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        mTaskNoteManager.batchUpdate(taskNoteList);
+    }
+
     //todo make async
     private void updateList() {
-        taskNoteListAdapter.clear();
-        taskNoteListAdapter.addAll(mTaskNoteManager.getByCategory(mCategory));
+        taskNoteList.clear();
+        taskNoteList.addAll(mTaskNoteManager.getByCategory(mCategory));
+        taskNoteListAdapter.notifyDataSetChanged();
     }
 }
