@@ -47,6 +47,14 @@ public class TaskNoteManager implements IDataManager<TaskNote> {
         }
     }
 
+    public void remove(long id) {
+        try {
+            mTaskNoteDao.deleteById(id);
+        } catch (SQLException e) {
+            Logger.error(e.getMessage());
+        }
+    }
+
     @Override
     public TaskNote findById(long id) {
         try {

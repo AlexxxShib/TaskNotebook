@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.shibkov.tasknotebook.app.R;
@@ -20,13 +19,15 @@ import java.util.List;
  */
 public class TaskNoteListAdapter extends ArrayAdapter<TaskNote> {
 
+    private static final int DEFAULT_SELECTED = -1;
+
     public interface OnActionClickListener {
         void doneItem(long id);
         void removeItem(long id);
         void editItem(long id);
     }
 
-    private int expandablePos = -1;
+    private int expandablePos = DEFAULT_SELECTED;
     private OnActionClickListener listener;
 
     public TaskNoteListAdapter(Context context, List<TaskNote> objects) {
@@ -38,7 +39,11 @@ public class TaskNoteListAdapter extends ArrayAdapter<TaskNote> {
     }
 
     public void action(int pos) {
-        expandablePos = pos;
+        if (expandablePos != pos) {
+            expandablePos = pos;
+        } else {
+            expandablePos = DEFAULT_SELECTED;
+        }
         notifyDataSetChanged();
     }
 
@@ -105,18 +110,21 @@ public class TaskNoteListAdapter extends ArrayAdapter<TaskNote> {
             buttonsRoot.setVisibility(isExpandable ? View.VISIBLE : View.GONE);
 
             if (isExpandable && listener != null) {
-                removeBtn.setOnClickListener(new View.OnClickListener() {
+                View.OnClickListener onClickListener = new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        listener.removeItem(note.getId());
+                        switch (v.getId()) {
+                            case R.id.remove:
+                                listener.removeItem(note.getId());
+                                break;
+                            case R.id.edit:
+                                listener.editItem(note.getId());
+                                break;
+                        }
                     }
-                });
-                editBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        listener.editItem(note.getId());
-                    }
-                });
+                };
+                removeBtn.setOnClickListener(onClickListener);
+                editBtn.setOnClickListener(onClickListener);
             } else {
                 removeBtn.setOnClickListener(null);
                 editBtn.setOnClickListener(null);

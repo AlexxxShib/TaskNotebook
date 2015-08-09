@@ -58,7 +58,8 @@ public class CategoryFragment extends Fragment {
             }
             @Override
             public void removeItem(long id) {
-
+                mTaskNoteManager.remove(id);
+                updateList();
             }
             @Override
             public void editItem(long id) {
