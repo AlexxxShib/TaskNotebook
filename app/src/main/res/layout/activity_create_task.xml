@@ -32,14 +32,14 @@
             android:layout_weight="1"
             android:layout_height="wrap_content" />
 
-        <Button
+        <!--<Button
             android:id="@+id/time_button"
             android:text="13:00"
             android:textSize="16sp"
             android:layout_margin="4dp"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content" />-->
 
     </LinearLayout>
 

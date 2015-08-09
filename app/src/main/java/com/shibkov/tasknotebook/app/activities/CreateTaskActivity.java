@@ -34,7 +34,7 @@ public class CreateTaskActivity extends AppCompatActivity implements View.OnClic
     private EditText descriptionEdit;
 
     private Button dateButton;
-    private Button timeButton;
+//    private Button timeButton;
 
     private TaskNoteManager taskNoteManager;
 
@@ -57,10 +57,10 @@ public class CreateTaskActivity extends AppCompatActivity implements View.OnClic
         descriptionEdit = (EditText) findViewById(R.id.descriptionEdit);
 
         dateButton = (Button) findViewById(R.id.date_button);
-        timeButton = (Button) findViewById(R.id.time_button);
+//        timeButton = (Button) findViewById(R.id.time_button);
 
         dateButton.setOnClickListener(this);
-        timeButton.setOnClickListener(this);
+//        timeButton.setOnClickListener(this);
 
         taskNoteManager = new TaskNoteManager(DatabaseManager.getHelper(this));
         initFields();
@@ -96,9 +96,9 @@ public class CreateTaskActivity extends AppCompatActivity implements View.OnClic
                 showDateDialog();
                 break;
 
-            case R.id.time_button:
+            /*case R.id.time_button:
                 showTimeDialog();
-                break;
+                break;*/
         }
     }
 
@@ -123,8 +123,13 @@ public class CreateTaskActivity extends AppCompatActivity implements View.OnClic
             dieTime.add(Calendar.DAY_OF_YEAR, 1);
         }
         Date date = dieTime.getTime();
-        timeButton.setText(new SimpleDateFormat(TIME_FORMAT).format(date));
+//        timeButton.setText(new SimpleDateFormat(TIME_FORMAT).format(date));
         dateButton.setText(new SimpleDateFormat(DATE_FORMAT).format(date));
+    }
+
+    private static void setHourMinutes(Calendar time) {
+        time.set(Calendar.HOUR_OF_DAY, 23);
+        time.set(Calendar.MINUTE, 59);
     }
 
     private void showDateDialog() {
@@ -134,13 +139,6 @@ public class CreateTaskActivity extends AppCompatActivity implements View.OnClic
                     public void dateSelected(long date) {
                         Calendar c = Calendar.getInstance();
                         c.setTimeInMillis(date);
-
-                        if (isEarlyTime(c)) {
-                            Calendar now = Calendar.getInstance();
-                            now.add(Calendar.HOUR, 1);
-                            dieTime.set(Calendar.HOUR, now.get(Calendar.HOUR));
-                            dieTime.set(Calendar.MINUTE, now.get(Calendar.MINUTE));
-                        }
 
                         dieTime.set(Calendar.YEAR, c.get(Calendar.YEAR));
                         dieTime.set(Calendar.MONTH, c.get(Calendar.MONTH));
@@ -184,6 +182,7 @@ public class CreateTaskActivity extends AppCompatActivity implements View.OnClic
             return;
         }
         String description = descriptionEdit.getText().toString();
+        setHourMinutes(dieTime);
 
         taskNote.setDate(dieTime.getTime());
         taskNote.setHeader(header);
