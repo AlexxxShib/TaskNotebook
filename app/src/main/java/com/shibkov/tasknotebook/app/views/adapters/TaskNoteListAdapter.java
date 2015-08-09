@@ -5,6 +5,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.shibkov.tasknotebook.app.R;
@@ -18,6 +21,7 @@ import java.util.List;
 public class TaskNoteListAdapter extends ArrayAdapter<TaskNote> {
 
     public interface OnActionClickListener {
+        void doneItem(long id);
         void removeItem(long id);
         void editItem(long id);
     }
@@ -57,6 +61,7 @@ public class TaskNoteListAdapter extends ArrayAdapter<TaskNote> {
         TextView number;
         TextView header;
         TextView body;
+        CheckBox done;
 
         View buttonsRoot;
         View editBtn;
@@ -66,6 +71,7 @@ public class TaskNoteListAdapter extends ArrayAdapter<TaskNote> {
             number = (TextView) itemView.findViewById(R.id.numberRow);
             header = (TextView) itemView.findViewById(R.id.headerRow);
             body   = (TextView) itemView.findViewById(R.id.descriptionRow);
+            done = (CheckBox) itemView.findViewById(R.id.done);
 
             buttonsRoot = itemView.findViewById(R.id.root_buttons);
             editBtn     = itemView.findViewById(R.id.edit);
@@ -83,6 +89,25 @@ public class TaskNoteListAdapter extends ArrayAdapter<TaskNote> {
             } else {
                 body.setText(bodyStr);
             }
+
+            done.setChecked(note.isDone());
+            done.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    listener.doneItem(note.getId());
+                    note.setDone(!note.isDone());
+                }
+            });
+            /*done.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.doneItem(note.getId());
+                    note.setDone(!note.isDone());
+                    int resId = note.isDone() ?
+                            R.drawable.circle_checkbox_selected : R.drawable.circle_checkbox_unselect;
+                    done.setBackgroundResource(resId);
+                }
+            });*/
 
             boolean isExpandable = position == expandablePos;
 

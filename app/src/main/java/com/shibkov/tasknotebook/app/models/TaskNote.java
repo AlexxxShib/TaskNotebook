@@ -18,7 +18,7 @@ public class TaskNote {
     private long id;
 
     @DatabaseField(columnName = DATE, canBeNull = false, dataType = DataType.DATE_STRING)
-    private Date date = new Date();
+    private Date date;
     @DatabaseField(columnName = IS_DONE, dataType = DataType.BOOLEAN)
     private boolean isDone = false;
 

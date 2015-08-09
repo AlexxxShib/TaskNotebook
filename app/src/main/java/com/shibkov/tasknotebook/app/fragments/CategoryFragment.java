@@ -51,6 +51,10 @@ public class CategoryFragment extends Fragment {
         taskNoteListAdapter = new TaskNoteListAdapter(getActivity(), new ArrayList<TaskNote>());
         taskNoteListAdapter.setActionListener(new TaskNoteListAdapter.OnActionClickListener() {
             @Override
+            public void doneItem(long id) {
+
+            }
+            @Override
             public void removeItem(long id) {
 
             }
